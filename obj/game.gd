@@ -9,7 +9,7 @@ func _ready() -> void:
 	)
 
 var players : Array[Player] = []
-var player_scene : PackedScene = load("res://Player.tscn")
+var player_scene : PackedScene = load("res://obj/player/Player.tscn")
 func make_player(peer_id : int) -> Player:
 	var player : Player = player_scene.instantiate()
 	self.add_child(player)
