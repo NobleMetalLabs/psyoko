@@ -1,0 +1,37 @@
+extends Node2D
+
+func _ready() -> void:
+	MultiplayerManager.player_connected.connect(
+		func new_player(peer_id : int) -> void:
+			var new_player : Player = make_player(peer_id)
+			MultiplayerManager.player_to_peer_id[new_player] = peer_id
+			MultiplayerManager.peer_id_to_player[peer_id] = new_player
+	)
+
+var players : Array[Player] = []
+var player_scene : PackedScene = load("res://Player.tscn")
+func make_player(peer_id : int) -> Player:
+	var player : Player = player_scene.instantiate()
+	self.add_child(player)
+	player.name = "P%s" % peer_id
+	players.append(player)
+
+	if peer_id != MultiplayerManager.get_peer_id():
+		player.process_mode = Node.PROCESS_MODE_DISABLED
+
+	player.moved.connect(
+		func(direction : Vector2i) -> void:
+		move_player(player, direction)
+	)
+	player.attacked.connect(print.bind("attacked"))
+	return player
+
+func move_player(player : Player, direction : Vector2) -> void:
+	var flipped : Vector2 = Vector2(direction.x, -direction.y)
+	Aligner.submit_event(MoveEvent.setup(player, flipped))
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("debug"):
+		var event : Event = MoveEvent.setup(self.get_child(0), Vector2i.RIGHT)
+		event.time = 0
+		Aligner.submit_event(event)

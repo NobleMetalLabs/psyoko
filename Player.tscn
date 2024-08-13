@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://byoo3105pucbt"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_ggufl"]
+[ext_resource type="Texture2D" uid="uid://c2yrcmenbp1te" path="res://ast/sprite/player.png" id="1_vxqdc"]
+[ext_resource type="Texture2D" uid="uid://vlxnoobkdq62" path="res://ast/sprite/attack/at-01.png" id="2_3stx0"]
+[ext_resource type="Texture2D" uid="uid://i4lxrc67qwrd" path="res://ast/sprite/attack/at-02.png" id="3_wsdrp"]
+[ext_resource type="Texture2D" uid="uid://b3fv5o8i1qumr" path="res://ast/sprite/attack/at-03.png" id="4_spoit"]
+[ext_resource type="Texture2D" uid="uid://dlg2dhry7te3m" path="res://ast/sprite/attack/at-04.png" id="5_t4js5"]
+[ext_resource type="Script" path="res://attack_sprite.gd" id="7_trxqh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t7158"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3stx0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_3stx0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wsdrp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wsdrp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_spoit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_spoit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_spoit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_t4js5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_t4js5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_t4js5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_t4js5")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"attack",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_ggufl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vxqdc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_t7158")
+offset = Vector2(6, 0)
+script = ExtResource("7_trxqh")
