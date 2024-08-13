@@ -38,6 +38,6 @@ func player_attacks(player : Player, direction : Vector2) -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("debug"):
-		var event : Event = MoveEvent.setup(self.get_child(0), Vector2i.RIGHT)
+		var event : Event = MoveEvent.setup(MultiplayerManager.get_local_player(), Vector2i.RIGHT)
 		event.time = 0
 		Aligner.submit_event(event)

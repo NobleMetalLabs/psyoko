@@ -42,6 +42,9 @@ func is_instance_server() -> bool:
 func get_peer_id() -> int:
 	return multiplayer.get_unique_id()
 
+func get_local_player() -> Node:
+	return peer_id_to_player[get_peer_id()]
+
 func get_num_players() -> int:
 	return peer_id_to_player.size()
 
