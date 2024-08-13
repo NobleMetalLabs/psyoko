@@ -28,6 +28,10 @@ window/size/mode=2
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 
+[editor]
+
+run/main_run_args="-lan"
+
 [input]
 
 pl_alternate={

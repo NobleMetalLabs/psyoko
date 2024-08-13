@@ -1,13 +1,17 @@
 class_name Player
 extends Node2D
 
+@onready var attack_sprite : PlayerAttackSprite = $AttackSprite
 var attacking : bool = false
 
 signal moved(direction : Vector2i)
 signal attacked(direction : Vector2i)
-signal finished_attacking()
+
+var accept_input : bool = true
 
 func _process(_delta: float) -> void:
+	if not accept_input:
+		return
 	if attacking:
 		return
 
@@ -31,7 +35,6 @@ func _process(_delta: float) -> void:
 	var alternate : bool = Input.is_action_pressed("pl_alternate")
 
 	if alternate:
-		attacking = true
 		attacked.emit(input_vector)
 	else:
 		moved.emit(input_vector)

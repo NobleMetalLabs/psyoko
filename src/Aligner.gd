@@ -42,3 +42,7 @@ func _handle_event(new_event : Event) -> void:
 	for event in events_to_undo:
 		event.do()
 		event_list.append(event)
+
+	var last_event : Event = event_list.back()
+	if last_event.has_method("fast_forward"):
+		last_event.fast_forward(get_time() - last_event.time)

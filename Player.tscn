@@ -63,10 +63,10 @@ animations = [{
 [node name="Player" type="Node2D"]
 script = ExtResource("1_ggufl")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="PlayerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_vxqdc")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AttackSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_t7158")
 offset = Vector2(6, 0)
 script = ExtResource("7_trxqh")

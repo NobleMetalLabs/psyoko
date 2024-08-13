@@ -17,18 +17,24 @@ func make_player(peer_id : int) -> Player:
 	players.append(player)
 
 	if peer_id != MultiplayerManager.get_peer_id():
-		player.process_mode = Node.PROCESS_MODE_DISABLED
+		player.accept_input = false
 
 	player.moved.connect(
 		func(direction : Vector2i) -> void:
 		move_player(player, direction)
 	)
-	player.attacked.connect(print.bind("attacked"))
+	player.attacked.connect(
+		func(direction : Vector2i) -> void:
+		player_attacks(player, direction)
+	)
 	return player
 
 func move_player(player : Player, direction : Vector2) -> void:
 	var flipped : Vector2 = Vector2(direction.x, -direction.y)
 	Aligner.submit_event(MoveEvent.setup(player, flipped))
+
+func player_attacks(player : Player, direction : Vector2) -> void:
+	Aligner.submit_event(AttackEvent.setup(player, direction))
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("debug"):
