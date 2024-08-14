@@ -11,6 +11,8 @@ func get_time() -> int:
 	return Time.get_ticks_msec() - time_start
 
 func _ready():
+	self.add_child(PlayerAligner.new())
+
 	MultiplayerManager.received_network_message.connect(
 		func handle_network_message(_sender_id : int, message : String, args : Array) -> void:
 		if message == "event":
@@ -22,6 +24,10 @@ func _ready():
 func submit_event(new_event : Event) -> void:
 	MultiplayerManager.send_network_message("event", [new_event])
 
+signal do_event(event : Event)
+signal undo_event(event : Event)
+signal fast_forward_event(event : Event, time_seconds : float)
+
 func _handle_event(new_event : Event) -> void:
 	var event_time : int = new_event.time
 	var events_to_undo : Array[Event] = []
@@ -32,17 +38,16 @@ func _handle_event(new_event : Event) -> void:
 		events_to_undo.append(current_event)
 
 	for event in events_to_undo:
-		event.undo()
+		undo_event.emit(event)
 		event_list.erase(event)
 	
-	new_event.do()
+	do_event.emit(new_event)
 	event_list.append(new_event)
 
 	events_to_undo.reverse()
 	for event in events_to_undo:
-		event.do()
+		do_event.emit(event)
 		event_list.append(event)
 
 	var last_event : Event = event_list.back()
-	if last_event.has_method("fast_forward"):
-		last_event.fast_forward(get_time() - last_event.time)
+	fast_forward_event.emit(last_event, (get_time() - last_event.time) / 1000.0)

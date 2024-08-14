@@ -11,13 +11,3 @@ static func setup(_player : Player, _direction : Vector2i) -> MoveEvent:
 	event.direction = _direction
 	event.time = Aligner.get_time()
 	return event
-
-func do() -> void:
-	var player = MultiplayerManager.peer_id_to_player[player_id]
-	if player == null: return
-	player.position += Vector2(direction) * 5
-
-func undo() -> void:
-	var player = MultiplayerManager.peer_id_to_player[player_id]
-	if player == null: return
-	player.position -= Vector2(direction) * 5

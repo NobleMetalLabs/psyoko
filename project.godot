@@ -21,7 +21,7 @@ config/icon="res://ast/sprite/ico/icon64.png"
 
 [autoload]
 
-Aligner="*res://src/Aligner.gd"
+Aligner="*res://src/aligners/Aligner.gd"
 MultiplayerManager="*res://src/MultiplayerManager.gd"
 Router="*res://src/Router.gd"
 
