@@ -1,12 +1,5 @@
+class_name Game
 extends Node2D
-
-func _ready() -> void:
-	MultiplayerManager.player_connected.connect(
-		func new_player(peer_id : int) -> void:
-			var new_player : Player = make_player(peer_id)
-			MultiplayerManager.player_to_peer_id[new_player] = peer_id
-			MultiplayerManager.peer_id_to_player[peer_id] = new_player
-	)
 
 var players : Array[Player] = []
 var player_scene : PackedScene = load("res://obj/player/Player.tscn")

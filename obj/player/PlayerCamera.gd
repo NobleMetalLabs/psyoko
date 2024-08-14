@@ -5,6 +5,9 @@ var INTERPOLATION_RATE : float = 20
 
 func _process(_delta) -> void:
 	var my_player : Player = MultiplayerManager.get_local_player()
+
+	if my_player == null: return
+
 	var nearest_player : Player = my_player
 	var nearest_player_distance : float = MAX_TARGET_DISTANCE ** 2
 	for player in MultiplayerManager.peer_id_to_player.values():

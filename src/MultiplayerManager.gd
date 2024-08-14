@@ -40,10 +40,11 @@ func is_instance_server() -> bool:
 	return get_peer_id() == 1
 
 func get_peer_id() -> int:
+	if multiplayer == null: return -1
 	return multiplayer.get_unique_id()
 
 func get_local_player() -> Node:
-	return peer_id_to_player[get_peer_id()]
+	return peer_id_to_player.get(get_peer_id(), null)
 
 func get_num_players() -> int:
 	return peer_id_to_player.size()
@@ -81,8 +82,11 @@ func exit_lobby() -> void:
 
 signal player_connected(peer_id : int)
 func on_player_connected(peer_id : int) -> void:
+	# TODO: Apparently this results in ids being taken before the client is actually finished connecting.
 	player_ids.append(peer_id)
 	player_connected.emit(peer_id)
+	
+	Aligner.submit_event(PlayerSpawnEvent.setup(peer_id))
 
 	send_network_message("time/reset", [])
 

@@ -23,6 +23,7 @@ config/icon="res://ast/sprite/ico/icon64.png"
 
 Aligner="*res://src/Aligner.gd"
 MultiplayerManager="*res://src/MultiplayerManager.gd"
+Router="*res://src/Router.gd"
 
 [display]
 

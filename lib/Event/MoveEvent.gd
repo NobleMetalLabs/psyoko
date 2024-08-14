@@ -13,7 +13,11 @@ static func setup(_player : Player, _direction : Vector2i) -> MoveEvent:
 	return event
 
 func do() -> void:
-	MultiplayerManager.peer_id_to_player[player_id].position += Vector2(direction) * 5
+	var player = MultiplayerManager.peer_id_to_player[player_id]
+	if player == null: return
+	player.position += Vector2(direction) * 5
 
 func undo() -> void:
-	MultiplayerManager.peer_id_to_player[player_id].position -= Vector2(direction) * 5
+	var player = MultiplayerManager.peer_id_to_player[player_id]
+	if player == null: return
+	player.position -= Vector2(direction) * 5

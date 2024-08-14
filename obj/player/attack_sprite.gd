@@ -7,7 +7,6 @@ func _ready() -> void:
 	self.animation_finished.connect(func() -> void:
 		self.play("default")
 		player.attacking = false
-		player.finished_attacking.emit()
 	)
 
 func attack(direction : Vector2i) -> void:
