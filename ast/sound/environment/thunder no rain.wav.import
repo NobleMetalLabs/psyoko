@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cu4o70sf4gb3r"
+path="res://.godot/imported/thunder no rain.wav-9974d51eeed23a160024d8139a354d73.sample"
+
+[deps]
+
+source_file="res://ast/sound/environment/thunder no rain.wav"
+dest_files=["res://.godot/imported/thunder no rain.wav-9974d51eeed23a160024d8139a354d73.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

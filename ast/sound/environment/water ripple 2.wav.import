@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cp43eesa85pnb"
+path="res://.godot/imported/water ripple 2.wav-de3b89621aaa72a0240aaa729239b5d5.sample"
+
+[deps]
+
+source_file="res://ast/sound/environment/water ripple 2.wav"
+dest_files=["res://.godot/imported/water ripple 2.wav-de3b89621aaa72a0240aaa729239b5d5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
