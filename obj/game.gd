@@ -24,13 +24,13 @@ func make_player(peer_id : int) -> Player:
 
 func move_player(player : Player, direction : Vector2) -> void:
 	var flipped : Vector2 = Vector2(direction.x, -direction.y)
-	Aligner.submit_event(MoveEvent.setup(player, flipped))
+	Aligner.submit_event(PlayerMoveEvent.setup(player, flipped))
 
 func player_attacks(player : Player, direction : Vector2) -> void:
-	Aligner.submit_event(AttackEvent.setup(player, direction))
+	Aligner.submit_event(PlayerAttackEvent.setup(player, direction))
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("debug"):
-		var event : Event = MoveEvent.setup(MultiplayerManager.get_local_player(), Vector2i.RIGHT)
+		var event : Event = PlayerMoveEvent.setup(MultiplayerManager.get_local_player(), Vector2i.RIGHT)
 		event.time = 0
 		Aligner.submit_event(event)
