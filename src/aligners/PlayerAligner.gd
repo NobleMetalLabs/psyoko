@@ -15,12 +15,16 @@ func do_event(event : Event) -> void:
 		_do_movement(event as PlayerMoveEvent)
 	elif event is PlayerSpawnEvent:
 		_do_spawn(event as PlayerSpawnEvent)
+	elif event is PlayerAttackEvent:
+		_do_attack(event as PlayerAttackEvent)
 
 func undo_event(event : Event) -> void:
 	if event is PlayerMoveEvent:
 		_undo_movement(event as PlayerMoveEvent)
 	elif event is PlayerSpawnEvent:
 		_undo_spawn(event as PlayerSpawnEvent)
+	elif event is PlayerAttackEvent:
+		_undo_attack(event as PlayerAttackEvent)
 
 func fast_forward_event(event : Event, time_seconds : float) -> void:
 	if event is PlayerAttackEvent:

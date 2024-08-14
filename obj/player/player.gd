@@ -18,15 +18,14 @@ func _process(_delta: float) -> void:
 	var input_vector : Vector2 = Vector2.ZERO
 	if Input.is_action_just_pressed("pl_up"):
 		input_vector -= Vector2.UP
-	elif Input.is_action_just_pressed("pl_down"):
+	if Input.is_action_just_pressed("pl_down"):
 		input_vector -= Vector2.DOWN
-	else:
-		if Input.is_action_just_pressed("pl_left"):
-			input_vector += Vector2.LEFT
-		elif Input.is_action_just_pressed("pl_right"):
-			input_vector += Vector2.RIGHT
-	
-	if input_vector.length_squared() == 0:
+	if Input.is_action_just_pressed("pl_left"):
+		input_vector += Vector2.LEFT
+	if Input.is_action_just_pressed("pl_right"):
+		input_vector += Vector2.RIGHT
+
+	if input_vector.is_zero_approx():
 		return
 
 	if input_vector.x != 0:
