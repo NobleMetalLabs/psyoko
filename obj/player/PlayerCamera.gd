@@ -37,4 +37,3 @@ func set_to_rect(rect : Rect2) -> void:
 
 	self.position = self.position.move_toward(cam_pos, INTERPOLATION_RATE)
 	self.zoom = self.zoom.move_toward(cam_zoom, INTERPOLATION_RATE / 100)
-

@@ -70,3 +70,5 @@ texture = ExtResource("1_vxqdc")
 sprite_frames = SubResource("SpriteFrames_t7158")
 offset = Vector2(6, 0)
 script = ExtResource("7_trxqh")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]

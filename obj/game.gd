@@ -9,8 +9,9 @@ func make_player(peer_id : int) -> Player:
 	player.name = "P%s" % peer_id
 	players.append(player)
 
-	if peer_id != MultiplayerManager.get_peer_id():
-		player.accept_input = false
+	if peer_id == MultiplayerManager.get_peer_id():
+		player.audio_listener.make_current()
+		player.accept_input = true
 
 	player.moved.connect(
 		func(direction : Vector2i) -> void:

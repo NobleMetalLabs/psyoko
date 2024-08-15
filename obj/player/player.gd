@@ -2,12 +2,13 @@ class_name Player
 extends Node2D
 
 @onready var attack_sprite : PlayerAttackSprite = $AttackSprite
+@onready var audio_listener : AudioListener2D = $AudioListener2D
 var attacking : bool = false
 
 signal moved(direction : Vector2i)
 signal attacked(direction : Vector2i)
 
-var accept_input : bool = true
+var accept_input : bool = false
 
 func _process(_delta: float) -> void:
 	if not accept_input:

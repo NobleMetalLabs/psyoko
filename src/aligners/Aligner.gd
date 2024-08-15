@@ -12,6 +12,7 @@ func get_time() -> int:
 
 func _ready():
 	self.add_child(PlayerAligner.new())
+	self.add_child(AudioAligner.new())
 
 	MultiplayerManager.received_network_message.connect(
 		func handle_network_message(_sender_id : int, message : String, args : Array) -> void:
