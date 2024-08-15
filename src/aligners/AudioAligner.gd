@@ -15,7 +15,10 @@ func do_event(event : Event) -> void:
 	#elif event is PlayerSpawnEvent:
 		#_do_spawn(event as PlayerSpawnEvent)
 	elif event is PlayerAttackEvent:
-		audio_stream = load("res://ast/sound/game/attack.wav")
+		if event.is_long:
+			audio_stream = load("res://ast/sound/game/attack_long.wav")
+		else:
+			audio_stream = load("res://ast/sound/game/attack.wav")
 	elif event is PlayerDeathEvent:
 		audio_stream = load("res://ast/sound/game/death.wav")
 	
