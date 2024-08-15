@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=4 uid="uid://desr3gnbe506p"]
+[gd_scene load_steps=6 format=4 uid="uid://desr3gnbe506p"]
 
 [ext_resource type="TileSet" uid="uid://x6o1akmo2lqj" path="res://ast/sprite/world/minit-rip-tileset.tres" id="1_2rb8i"]
 [ext_resource type="Script" path="res://scn/world_test.gd" id="1_5qq0i"]
 [ext_resource type="TileSet" uid="uid://cxvkjx1xiay6t" path="res://ast/sprite/world/debug-biome-tileset.tres" id="2_fli8b"]
+[ext_resource type="Script" path="res://scn/world_camera.gd" id="4_xoiu3"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_2yepy"]
 noise_type = 3
@@ -31,3 +32,6 @@ navigation_enabled = false
 use_parent_material = true
 tile_set = ExtResource("1_2rb8i")
 navigation_enabled = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("4_xoiu3")

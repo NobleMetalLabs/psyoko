@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var tile_map : Node2D = $TileMap
 @onready var biome_layer : TileMapLayer = tile_map.get_child(0)
-var map_size : Vector2i = Vector2i(64, 64)
+var map_size : Vector2i = Vector2i(256, 256)
 
 @export var biome_noise : FastNoiseLite
 
