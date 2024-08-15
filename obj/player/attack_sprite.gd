@@ -9,10 +9,13 @@ func _ready() -> void:
 		player.attacking = false
 	)
 
-func attack(direction : Vector2i) -> void:
+func attack(direction : Vector2i, is_long : bool) -> void:
 	self.rotation = Vector2(direction).angle_to(Vector2i.RIGHT)
 	player.attacking = true
 	self.play("attack")
+	
+	if not is_long: self.scale = Vector2(2.5, 2.5)
+	else: self.scale = Vector2(5, 1)
 
 func cancel() -> void:
 	self.stop()

@@ -26,8 +26,8 @@ func make_player(peer_id : int) -> Player:
 		move_player(player, direction)
 	)
 	player.attacked.connect(
-		func(direction : Vector2i) -> void:
-		player_attacks(player, direction)
+		func(direction : Vector2i, is_long : bool) -> void:
+		player_attacks(player, direction, is_long)
 	)
 	return player
 
@@ -35,8 +35,8 @@ func move_player(player : Player, direction : Vector2) -> void:
 	var flipped : Vector2 = Vector2(direction.x, -direction.y)
 	Aligner.submit_event(PlayerMoveEvent.setup(player, flipped))
 
-func player_attacks(player : Player, direction : Vector2) -> void:
-	Aligner.submit_event(PlayerAttackEvent.setup(player, direction))
+func player_attacks(player : Player, direction : Vector2, is_long : bool) -> void:
+	Aligner.submit_event(PlayerAttackEvent.setup(player, direction, is_long))
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("debug"):

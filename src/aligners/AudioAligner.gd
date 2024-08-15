@@ -16,6 +16,8 @@ func do_event(event : Event) -> void:
 		#_do_spawn(event as PlayerSpawnEvent)
 	elif event is PlayerAttackEvent:
 		audio_stream = load("res://ast/sound/game/attack.wav")
+	elif event is PlayerDeathEvent:
+		audio_stream = load("res://ast/sound/game/death.wav")
 	
 	if audio_stream != null:
 		var new_audio_player := AudioStreamPlayer2D.new()

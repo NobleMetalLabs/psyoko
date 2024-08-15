@@ -81,12 +81,29 @@ sprite_frames = SubResource("SpriteFrames_t7158")
 offset = Vector2(10, 1)
 script = ExtResource("7_trxqh")
 
-[node name="AttackArea" type="Area2D" parent="."]
-metadata/_edit_group_ = true
+[node name="AttackBase" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="AttackArea"]
-position = Vector2(16, 0)
-polygon = PackedVector2Array(-4, -16, 4, -16, 4, -4, 16, -4, 16, 4, 4, 4, 4, 16, -4, 16)
+[node name="NormalAttackCasts" type="Node2D" parent="AttackBase"]
+unique_name_in_owner = true
+
+[node name="Normal1" type="RayCast2D" parent="AttackBase/NormalAttackCasts"]
+target_position = Vector2(16, -16)
+collide_with_areas = true
+
+[node name="Normal2" type="RayCast2D" parent="AttackBase/NormalAttackCasts"]
+target_position = Vector2(32, 0)
+collide_with_areas = true
+
+[node name="Normal3" type="RayCast2D" parent="AttackBase/NormalAttackCasts"]
+target_position = Vector2(16, 16)
+collide_with_areas = true
+
+[node name="LongAttackCast" type="RayCast2D" parent="AttackBase"]
+unique_name_in_owner = true
+target_position = Vector2(64, 0)
+collide_with_areas = true
+metadata/_edit_lock_ = true
 
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 2.0

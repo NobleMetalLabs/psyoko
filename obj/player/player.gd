@@ -2,14 +2,15 @@ class_name Player
 extends Area2D
 
 @onready var attack_sprite : PlayerAttackSprite = $AttackSprite
-@onready var attack_area : Area2D = $AttackArea
 @onready var audio_listener : AudioListener2D = $AudioListener2D
 @onready var death_timer : Timer = $DeathTimer
 
 var attacking : bool = false
+@onready var normal_attack_holder : Node2D = $"%NormalAttackCasts"
+@onready var long_attack_cast : RayCast2D = $"%LongAttackCast"
 
 signal moved(direction : Vector2i)
-signal attacked(direction : Vector2i)
+signal attacked(direction : Vector2i, long : bool)
 
 var accept_input : bool = false
 var attack_charge_value : float = 0
@@ -35,16 +36,20 @@ func _process(delta: float) -> void:
 		attack_charge_value += delta
 	else:
 		attack_charge_value = 0
-
+	
 	if input_vector.is_zero_approx():
 		return
 
 	if input_vector.x != 0:
 		input_vector.y = 0
 
+
 	if alternate:
-		attacked.emit(input_vector)
-		attack_area.rotation = Vector2(input_vector).angle_to(Vector2i.RIGHT)
+		var is_long : bool = (attack_charge_value >= 1.5) # probably make this a const lol
+		attacked.emit(input_vector, is_long)
+		
+		$AttackBase.rotation = Vector2(input_vector).angle_to(Vector2i.RIGHT)
 		attack_charge_value = 0
+		
 	else:
 		moved.emit(input_vector)
