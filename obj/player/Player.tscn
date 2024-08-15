@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://byoo3105pucbt"]
+[gd_scene load_steps=11 format=3 uid="uid://byoo3105pucbt"]
 
 [ext_resource type="Script" path="res://obj/player/player.gd" id="1_ggufl"]
 [ext_resource type="Texture2D" uid="uid://c2yrcmenbp1te" path="res://ast/sprite/player/player.png" id="1_vxqdc"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b3fv5o8i1qumr" path="res://ast/sprite/player/attack/at-03.png" id="4_spoit"]
 [ext_resource type="Texture2D" uid="uid://dlg2dhry7te3m" path="res://ast/sprite/player/attack/at-04.png" id="5_t4js5"]
 [ext_resource type="Script" path="res://obj/player/attack_sprite.gd" id="7_trxqh"]
+[ext_resource type="AudioStream" uid="uid://bt7qxv5c7snsy" path="res://ast/sound/game/move.wav" id="8_0i8ff"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jb704"]
 size = Vector2(16, 16)
@@ -108,3 +109,7 @@ metadata/_edit_lock_ = true
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="ChargedAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_0i8ff")
+pitch_scale = 2.0

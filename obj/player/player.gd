@@ -8,6 +8,7 @@ extends Area2D
 var attacking : bool = false
 @onready var normal_attack_holder : Node2D = $"%NormalAttackCasts"
 @onready var long_attack_cast : RayCast2D = $"%LongAttackCast"
+var played_charge_sound : bool = false
 
 signal moved(direction : Vector2i)
 signal attacked(direction : Vector2i, long : bool)
@@ -34,8 +35,12 @@ func _process(delta: float) -> void:
 	var alternate : bool = Input.is_action_pressed("pl_alternate")
 	if alternate:
 		attack_charge_value += delta
+		if attack_charge_value >= 1 and not played_charge_sound: 
+			played_charge_sound = true
+			$ChargedAudio.play()
 	else:
 		attack_charge_value = 0
+		played_charge_sound = false
 	
 	if input_vector.is_zero_approx():
 		return
@@ -45,11 +50,12 @@ func _process(delta: float) -> void:
 
 
 	if alternate:
-		var is_long : bool = (attack_charge_value >= 1.5) # probably make this a const lol
-		attacked.emit(input_vector, is_long)
-		
+		var is_long : bool = (attack_charge_value >= 1) # probably make this a const lol
 		$AttackBase.rotation = Vector2(input_vector).angle_to(Vector2i.RIGHT)
 		attack_charge_value = 0
+		played_charge_sound = false
+		
+		attacked.emit(input_vector, is_long)
 		
 	else:
 		moved.emit(input_vector)

@@ -62,7 +62,7 @@ func _undo_spawn(event : PlayerSpawnEvent) -> void:
 		player.queue_free()
 
 
-
+# sometimes deaths get rolled back and the attack doesnt go through i think
 func _do_attack(event : PlayerAttackEvent) -> void:
 	var player : Player = MultiplayerManager.peer_id_to_player[event.player_id]
 	player.attack_sprite.attack(event.direction, event.is_long)
@@ -71,7 +71,7 @@ func _do_attack(event : PlayerAttackEvent) -> void:
 		for cast : RayCast2D in player.normal_attack_holder.get_children():
 			while cast.get_collider() is Player:
 				var attacked_player : Player = cast.get_collider()
-				if attacked_player.accept_input:
+				if attacked_player.visible:
 					Aligner.submit_event(PlayerDeathEvent.setup(attacked_player))
 				
 				cast.add_exception(attacked_player)
@@ -82,7 +82,7 @@ func _do_attack(event : PlayerAttackEvent) -> void:
 	else:
 		while player.long_attack_cast.get_collider() is Player:
 			var attacked_player = player.long_attack_cast.get_collider()
-			if attacked_player.accept_input:
+			if attacked_player.visible:
 				Aligner.submit_event(PlayerDeathEvent.setup(attacked_player))
 			
 			player.long_attack_cast.add_exception(attacked_player)
