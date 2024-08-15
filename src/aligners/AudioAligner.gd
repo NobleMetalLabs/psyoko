@@ -20,9 +20,13 @@ func do_event(event : Event) -> void:
 	if audio_stream != null:
 		var new_audio_player := AudioStreamPlayer2D.new()
 		var player : Player = MultiplayerManager.peer_id_to_player[event.player_id]
+
+		if player == null:
+			return
 		
 		player.add_child(new_audio_player, true)
 		new_audio_player.stream = audio_stream
+		new_audio_player.max_distance = 300
 		new_audio_player.play()
 		
 		new_audio_player.finished.connect(

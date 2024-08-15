@@ -1,6 +1,12 @@
 class_name Game
 extends Node2D
 
+func _ready():
+	var args := Array(OS.get_cmdline_args())
+	if args.has("-client"):
+		for bus_idx : int in range(0, AudioServer.bus_count):
+			AudioServer.set_bus_mute(bus_idx, true)
+
 var players : Array[Player] = []
 var player_scene : PackedScene = load("res://obj/player/Player.tscn")
 func make_player(peer_id : int) -> Player:
