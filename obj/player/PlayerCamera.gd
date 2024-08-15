@@ -1,7 +1,11 @@
 extends Camera2D
 
-const MAX_TARGET_DISTANCE : int = 250
-var INTERPOLATION_RATE : float = 20
+const SCREEN_PADDING : int = 2 * Psyoko.TILE_SIZE
+const PAN_RATE : float = 0.5 * Psyoko.TILE_SIZE
+const ZOOM_RATE : float = 0.01 
+const MAX_ZOOM : float = 0.5
+
+# TODO: Some functionality of the camera calculates based on viewport size, which may not equal window size due to window header, taskbar, etc.
 
 func _process(_delta) -> void:
 	var my_player : Player = MultiplayerManager.get_local_player()
@@ -9,7 +13,7 @@ func _process(_delta) -> void:
 	if my_player == null: return
 
 	var nearest_player : Player = my_player
-	var nearest_player_distance : float = MAX_TARGET_DISTANCE ** 2
+	var nearest_player_distance : float = (Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE) ** 2 
 	for player in MultiplayerManager.peer_id_to_player.values():
 		if player == my_player:
 			continue
@@ -22,18 +26,18 @@ func _process(_delta) -> void:
 	view_rect.position = my_player.global_position
 	view_rect = view_rect.expand(nearest_player.global_position)
 	view_rect = view_rect.expand(my_player.global_position)
-	view_rect = view_rect.grow(25)
+	view_rect = view_rect.grow(SCREEN_PADDING * Psyoko.SCREEN_SCALE)
 
 	set_to_rect(view_rect)
 
 @onready var viewport_rect = get_viewport_rect()
 func set_to_rect(rect : Rect2) -> void:
 	if rect.size.is_zero_approx(): return
-	var cam_pos : Vector2 = rect.get_center()
+	var cam_pos : Vector2 = rect.get_center() 
 	var _cam_scale : Vector2 = viewport_rect.size / rect.size
 	var cam_zoom : Vector2 = Vector2.ONE * (_cam_scale.x if _cam_scale.x < _cam_scale.y else _cam_scale.y)
 
-	cam_zoom = cam_zoom.clamp(Vector2.ZERO, Vector2.ONE * 1.25)
+	cam_zoom = cam_zoom.clampf(0, MAX_ZOOM)
 
-	self.position = self.position.move_toward(cam_pos, INTERPOLATION_RATE)
-	self.zoom = self.zoom.move_toward(cam_zoom, INTERPOLATION_RATE / 100)
+	self.position = self.position.move_toward(cam_pos, PAN_RATE * Psyoko.SCREEN_SCALE)
+	self.zoom = self.zoom.move_toward(cam_zoom, ZOOM_RATE)

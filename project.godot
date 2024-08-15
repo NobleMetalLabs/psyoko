@@ -21,14 +21,15 @@ config/icon="res://ast/sprite/ico/icon64.png"
 
 [autoload]
 
-Aligner="*res://src/aligners/Aligner.gd"
+Psyoko="*res://src/Psyoko.gd"
 MultiplayerManager="*res://src/MultiplayerManager.gd"
+Aligner="*res://src/aligners/Aligner.gd"
 Router="*res://src/Router.gd"
 
 [display]
 
-window/size/viewport_width=192
-window/size/viewport_height=108
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/mode=2
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"

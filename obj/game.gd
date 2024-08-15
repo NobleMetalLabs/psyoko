@@ -1,5 +1,5 @@
 class_name Game
-extends Node2D
+extends Node
 
 func _ready():
 	var args := Array(OS.get_cmdline_args())
@@ -9,9 +9,11 @@ func _ready():
 
 var players : Array[Player] = []
 var player_scene : PackedScene = load("res://obj/player/Player.tscn")
+
+@onready var world : Node2D = $"%WORLD"
 func make_player(peer_id : int) -> Player:
 	var player : Player = player_scene.instantiate()
-	self.add_child(player)
+	world.add_child(player)
 	player.name = "P%s" % peer_id
 	players.append(player)
 

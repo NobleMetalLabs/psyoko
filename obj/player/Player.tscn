@@ -67,8 +67,12 @@ script = ExtResource("1_ggufl")
 texture = ExtResource("1_vxqdc")
 
 [node name="AttackSprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_t7158")
-offset = Vector2(6, 0)
+animation = &"attack"
+frame = 11
+frame_progress = 1.0
+offset = Vector2(10, 1)
 script = ExtResource("7_trxqh")
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]

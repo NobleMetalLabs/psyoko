@@ -35,12 +35,12 @@ func fast_forward_event(event : Event, time_seconds : float) -> void:
 func _do_movement(event : PlayerMoveEvent) -> void:
 	var player = MultiplayerManager.peer_id_to_player[event.player_id]
 	if player == null: return
-	player.position += Vector2(event.direction) * 5
+	player.position += Vector2(event.direction) * Psyoko.TILE_SIZE
 
 func _undo_movement(event : PlayerMoveEvent) -> void:
 	var player = MultiplayerManager.peer_id_to_player[event.player_id]
 	if player == null: return
-	player.position -= Vector2(event.direction) * 5
+	player.position -= Vector2(event.direction) * Psyoko.TILE_SIZE
 
 
 

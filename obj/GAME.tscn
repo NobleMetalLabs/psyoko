@@ -1,11 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxxsongvd8cor"]
+[gd_scene load_steps=4 format=3 uid="uid://bxxsongvd8cor"]
 
 [ext_resource type="Script" path="res://obj/game.gd" id="1_pfeos"]
 [ext_resource type="Script" path="res://obj/player/PlayerCamera.gd" id="2_32he5"]
+[ext_resource type="PackedScene" uid="uid://gopi1vs5xgml" path="res://obj/WORLD.tscn" id="3_c7xa5"]
 
-[node name="GAME" type="Node2D"]
+[node name="GAME" type="Node"]
 script = ExtResource("1_pfeos")
 
+[node name="WORLD" parent="." instance=ExtResource("3_c7xa5")]
+unique_name_in_owner = true
+scale = Vector2(10, 10)
+
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(96, 54)
+position = Vector2(960, 540)
 script = ExtResource("2_32he5")

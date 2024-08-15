@@ -26,7 +26,7 @@ func do_event(event : Event) -> void:
 		
 		player.add_child(new_audio_player, true)
 		new_audio_player.stream = audio_stream
-		new_audio_player.max_distance = 300
+		new_audio_player.max_distance = Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE * 1.25
 		new_audio_player.play()
 		
 		new_audio_player.finished.connect(
