@@ -11,7 +11,7 @@ Primarily it is an applied experiment and learning effort for Rollback Netcoding
   - [x] Player spawn
   - [x] Movement
   - [x] Attacking
-  - [ ] Death
+  - [x] Death
   - [ ] Pushable Boxes
   - [ ] Scoreboard
 - [ ] World

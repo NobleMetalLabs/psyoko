@@ -1,16 +1,20 @@
 class_name Player
-extends Node2D
+extends Area2D
 
 @onready var attack_sprite : PlayerAttackSprite = $AttackSprite
+@onready var attack_area : Area2D = $AttackArea
 @onready var audio_listener : AudioListener2D = $AudioListener2D
+@onready var death_timer : Timer = $DeathTimer
+
 var attacking : bool = false
 
 signal moved(direction : Vector2i)
 signal attacked(direction : Vector2i)
 
 var accept_input : bool = false
+var attack_charge_value : float = 0
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if not accept_input:
 		return
 	if attacking:
@@ -26,15 +30,21 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pl_right"):
 		input_vector += Vector2.RIGHT
 
+	var alternate : bool = Input.is_action_pressed("pl_alternate")
+	if alternate:
+		attack_charge_value += delta
+	else:
+		attack_charge_value = 0
+
 	if input_vector.is_zero_approx():
 		return
 
 	if input_vector.x != 0:
 		input_vector.y = 0
 
-	var alternate : bool = Input.is_action_pressed("pl_alternate")
-
 	if alternate:
 		attacked.emit(input_vector)
+		attack_area.rotation = Vector2(input_vector).angle_to(Vector2i.RIGHT)
+		attack_charge_value = 0
 	else:
 		moved.emit(input_vector)

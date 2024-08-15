@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://byoo3105pucbt"]
+[gd_scene load_steps=10 format=3 uid="uid://byoo3105pucbt"]
 
 [ext_resource type="Script" path="res://obj/player/player.gd" id="1_ggufl"]
 [ext_resource type="Texture2D" uid="uid://c2yrcmenbp1te" path="res://ast/sprite/player/player.png" id="1_vxqdc"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://b3fv5o8i1qumr" path="res://ast/sprite/player/attack/at-03.png" id="4_spoit"]
 [ext_resource type="Texture2D" uid="uid://dlg2dhry7te3m" path="res://ast/sprite/player/attack/at-04.png" id="5_t4js5"]
 [ext_resource type="Script" path="res://obj/player/attack_sprite.gd" id="7_trxqh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jb704"]
+size = Vector2(16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_t7158"]
 animations = [{
@@ -60,8 +63,14 @@ animations = [{
 "speed": 1.0
 }]
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="Area2D"]
 script = ExtResource("1_ggufl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jb704")
+metadata/_edit_lock_ = true
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_vxqdc")
@@ -69,10 +78,16 @@ texture = ExtResource("1_vxqdc")
 [node name="AttackSprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_t7158")
-animation = &"attack"
-frame = 11
-frame_progress = 1.0
 offset = Vector2(10, 1)
 script = ExtResource("7_trxqh")
 
-[node name="AudioListener2D" type="AudioListener2D" parent="."]
+[node name="AttackArea" type="Area2D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="AttackArea"]
+position = Vector2(16, 0)
+polygon = PackedVector2Array(-4, -16, 4, -16, 4, -4, 16, -4, 16, 4, 4, 4, 4, 16, -4, 16)
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
