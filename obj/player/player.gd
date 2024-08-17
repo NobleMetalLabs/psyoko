@@ -8,6 +8,7 @@ extends Area2D
 var attacking : bool = false
 @onready var normal_attack_holder : Node2D = $"%NormalAttackCasts"
 @onready var long_attack_cast : RayCast2D = $"%LongAttackCast"
+@onready var move_cast : RayCast2D = $MoveCast
 var played_charge_sound : bool = false
 
 signal moved(direction : Vector2i)
@@ -58,4 +59,5 @@ func _process(delta: float) -> void:
 		attacked.emit(input_vector, is_long)
 		
 	else:
+		move_cast.rotation = Vector2(input_vector).angle_to(Vector2i.RIGHT)
 		moved.emit(input_vector)

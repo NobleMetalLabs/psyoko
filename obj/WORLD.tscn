@@ -1,3 +1,10 @@
-[gd_scene format=3 uid="uid://gopi1vs5xgml"]
+[gd_scene load_steps=2 format=4 uid="uid://gopi1vs5xgml"]
+
+[ext_resource type="TileSet" uid="uid://cxvkjx1xiay6t" path="res://ast/sprite/world/debug-biome-tileset.tres" id="1_ot6yq"]
 
 [node name="WORLD" type="Node2D"]
+
+[node name="wawa" type="TileMapLayer" parent="."]
+position = Vector2(-8, -8)
+tile_map_data = PackedByteArray("AAD7/wMAAAABAAAAAAD8/wMAAAABAAAAAAD9/wMAAAABAAAAAAD+/wMAAAABAAAAAAD//wMAAAABAAAAAAAAAAMAAAABAAAAAAAEAP7/AAABAAAAAAAEAP//AAABAAAAAAAFAAAAAAABAAAAAAAFAAEAAAABAAAAAAD6//3/AAABAAAAAAD5//3/AAABAAAAAAD4//7/AAABAAAAAAD3/wIAAAABAAAAAAD3/wMAAAABAAAAAAD9//v/AAABAAAAAAD9//r/AAABAAAAAAD+//r/AAABAAAAAAD///r/AAABAAAAAAAAAPr/AAABAAAAAAABAPr/AAABAAAAAAACAPr/AAABAAAAAAADAPr/AAABAAAAAAAIAPz/AAABAAAAAAAIAP3/AAABAAAAAAAIAP7/AAABAAAAAAAIAP//AAABAAAAAAAIAAAAAAABAAAAAAD5//n/AAABAAAAAAD4//n/AAABAAAAAAA=")
+tile_set = ExtResource("1_ot6yq")

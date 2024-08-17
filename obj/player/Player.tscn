@@ -82,14 +82,21 @@ sprite_frames = SubResource("SpriteFrames_t7158")
 offset = Vector2(10, 1)
 script = ExtResource("7_trxqh")
 
+[node name="MoveCast" type="RayCast2D" parent="."]
+target_position = Vector2(16, 0)
+collide_with_areas = true
+
 [node name="AttackBase" type="Node2D" parent="."]
+visible = false
 metadata/_edit_lock_ = true
 
 [node name="NormalAttackCasts" type="Node2D" parent="AttackBase"]
 unique_name_in_owner = true
 
 [node name="Normal1" type="RayCast2D" parent="AttackBase/NormalAttackCasts"]
-target_position = Vector2(16, -16)
+position = Vector2(12, -12)
+target_position = Vector2(4, -4)
+hit_from_inside = true
 collide_with_areas = true
 
 [node name="Normal2" type="RayCast2D" parent="AttackBase/NormalAttackCasts"]
@@ -97,7 +104,9 @@ target_position = Vector2(32, 0)
 collide_with_areas = true
 
 [node name="Normal3" type="RayCast2D" parent="AttackBase/NormalAttackCasts"]
-target_position = Vector2(16, 16)
+position = Vector2(12, 12)
+target_position = Vector2(4, 4)
+hit_from_inside = true
 collide_with_areas = true
 
 [node name="LongAttackCast" type="RayCast2D" parent="AttackBase"]

@@ -32,6 +32,10 @@ func make_player(peer_id : int) -> Player:
 	return player
 
 func move_player(player : Player, direction : Vector2) -> void:
+	player.move_cast.force_raycast_update()
+	var collision_check = player.move_cast.get_collider()
+	if collision_check is TileMapLayer: return
+	
 	var flipped : Vector2 = Vector2(direction.x, -direction.y)
 	Aligner.submit_event(PlayerMoveEvent.setup(player, flipped))
 
