@@ -6,9 +6,7 @@ signal network_update()
 var multiplayer_peer := ENetMultiplayerPeer.new()
 var player_name : String = "P%s" % OS.get_process_id()
 
-var player_ids : Array[int] = []
-var peer_id_to_player : Dictionary = {}
-var player_to_peer_id : Dictionary = {}
+var peer_ids : Array[int] = []
 
 var ADDRESS : String
 const PORT = 31570
@@ -44,10 +42,13 @@ func get_peer_id() -> int:
 	return multiplayer.get_unique_id()
 
 func get_local_player() -> Node:
-	return peer_id_to_player.get(get_peer_id(), null)
+	var my_id : int = get_peer_id()
+	if UIDDB.has_uid(my_id):
+		return UIDDB.object(my_id)
+	return null
 
 func get_num_players() -> int:
-	return peer_id_to_player.size()
+	return peer_ids.size()
 
 func host_lobby(over_lan : bool = false) -> void:
 	if not over_lan:
@@ -76,14 +77,13 @@ func join_lobby(address : String = "127.0.0.1") -> void:
 func exit_lobby() -> void:
 	multiplayer_peer = ENetMultiplayerPeer.new()
 	multiplayer.multiplayer_peer = null
-	peer_id_to_player.clear()
 	print("Left server")
 	network_update.emit()
 
 signal player_connected(peer_id : int)
 func on_player_connected(peer_id : int) -> void:
 	# TODO: Apparently this results in ids being taken before the client is actually finished connecting.
-	player_ids.append(peer_id)
+	peer_ids.append(peer_id)
 	player_connected.emit(peer_id)
 	
 	Aligner.submit_event(PlayerSpawnEvent.setup(peer_id))
@@ -95,7 +95,7 @@ func on_player_disconnected(peer_id : int) -> void:
 		exit_lobby.call_deferred()
 		print("Host disconnected.")
 		return
-	peer_id_to_player.erase(peer_id)
+	peer_ids.erase(peer_id)
 	network_update.emit()
 
 func send_network_message(message : String, args : Array, recipient_id : int = -1, remote_only : bool = false) -> void:

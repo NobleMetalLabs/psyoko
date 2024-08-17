@@ -10,8 +10,10 @@ var event_to_audio_player : Dictionary = {}
 
 func do_event(event : Event) -> void:
 	var audio_stream : AudioStream = null
-	if event is PlayerMoveEvent:
-		audio_stream = load("res://ast/sound/game/move.wav")
+	if event is ObjectMoveEvent:
+		if not UIDDB.has_uid(event.object_id): return
+		if UIDDB.object(event.object_id) is Player:
+			audio_stream = load("res://ast/sound/game/move.wav")
 	#elif event is PlayerSpawnEvent:
 		#_do_spawn(event as PlayerSpawnEvent)
 	elif event is PlayerAttackEvent:
@@ -24,12 +26,19 @@ func do_event(event : Event) -> void:
 	
 	if audio_stream != null:
 		var new_audio_player := AudioStreamPlayer2D.new()
-		var player : Player = MultiplayerManager.peer_id_to_player[event.player_id]
-
-		if player == null:
+		var object_id : int = -1
+		if event.get("object_id") != null:
+			object_id = event.object_id
+		elif event.get("player_id") != null:
+			object_id = event.player_id
+		else:
 			return
 		
-		player.add_child(new_audio_player, true)
+		if not UIDDB.has_uid(object_id): return
+		var object : Object = UIDDB.object(object_id)
+
+		
+		object.add_child(new_audio_player, true)
 		new_audio_player.stream = audio_stream
 		new_audio_player.max_distance = Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE * 1.25
 		new_audio_player.play()

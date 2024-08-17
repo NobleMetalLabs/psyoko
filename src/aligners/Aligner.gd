@@ -11,6 +11,7 @@ func get_time() -> int:
 	return Time.get_ticks_msec() - time_start
 
 func _ready():
+	self.add_child(ObjectAligner.new())
 	self.add_child(PlayerAligner.new())
 	self.add_child(AudioAligner.new())
 

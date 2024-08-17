@@ -1,5 +1,5 @@
 class_name Player
-extends Area2D
+extends Pushable
 
 @onready var attack_sprite : PlayerAttackSprite = $AttackSprite
 @onready var audio_listener : AudioListener2D = $AudioListener2D
@@ -8,7 +8,6 @@ extends Area2D
 var attacking : bool = false
 @onready var normal_attack_holder : Node2D = $"%NormalAttackCasts"
 @onready var long_attack_cast : RayCast2D = $"%LongAttackCast"
-@onready var move_cast : RayCast2D = $MoveCast
 var played_charge_sound : bool = false
 
 signal moved(direction : Vector2i)
@@ -60,17 +59,3 @@ func _process(delta: float) -> void:
 		
 	else:
 		moved.emit(input_vector)
-
-func collision_check(direction : Vector2) -> Array:
-	move_cast.rotation = Vector2(direction).angle_to(Vector2i.RIGHT)
-	move_cast.force_raycast_update()
-	
-	var pushed = []
-	var collider = move_cast.get_collider()
-	if collider is TileMapLayer: 
-		pushed.append(collider)
-	elif collider is Box or collider is Player:
-		pushed.append(UIDDB.uid(collider))
-		pushed.append_array(collider.collision_check(direction))
-	
-	return pushed

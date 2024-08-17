@@ -8,7 +8,7 @@ func _ready():
 			AudioServer.set_bus_mute(bus_idx, true)
 	
 	# TEMPORARY SOLUTION
-	for box : Box in world.get_node("boxes").get_children():
+	for box : Pushable in world.get_node("boxes").get_children():
 		UIDDB.register_object(box, hash(box.position))
 
 var players : Array[Player] = []
@@ -40,13 +40,15 @@ func move_player(player : Player, direction : Vector2) -> void:
 	if not pushed_objects.is_empty() and pushed_objects.back() is TileMapLayer: return
 	
 	var flipped : Vector2 = Vector2(direction.x, -direction.y)
-	Aligner.submit_event(PlayerMoveEvent.setup(player, flipped, pushed_objects))
+	Aligner.submit_event(ObjectMoveEvent.setup(player, flipped))
+	for pushed_object in pushed_objects:
+		Aligner.submit_event(ObjectMoveEvent.setup(pushed_object, flipped))
 
 func player_attacks(player : Player, direction : Vector2, is_long : bool) -> void:
 	Aligner.submit_event(PlayerAttackEvent.setup(player, direction, is_long))
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("debug"):
-		var event : Event = PlayerMoveEvent.setup(MultiplayerManager.get_local_player(), Vector2i.RIGHT, [])
+		var event : Event = ObjectMoveEvent.setup(MultiplayerManager.get_local_player(), Vector2i.RIGHT)
 		event.time = 0
 		Aligner.submit_event(event)
