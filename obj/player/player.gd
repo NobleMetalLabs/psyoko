@@ -4,6 +4,7 @@ extends Pushable
 @onready var attack_sprite : PlayerAttackSprite = $AttackSprite
 @onready var audio_listener : AudioListener2D = $AudioListener2D
 @onready var death_timer : Timer = $DeathTimer
+@onready var collision_shape : CollisionShape2D = $CollisionShape2D
 
 var attacking : bool = false
 @onready var normal_attack_holder : Node2D = $"%NormalAttackCasts"

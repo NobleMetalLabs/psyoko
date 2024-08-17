@@ -90,6 +90,7 @@ func _do_death(event : PlayerDeathEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
 	player.hide()
 	player.accept_input = false
+	player.collision_shape.set_deferred("disabled", true)
 	
 	player.death_timer.start()
 	#player.death_timer.timeout.connect(print.bind("menu")) # kill this
@@ -98,5 +99,6 @@ func _undo_death(event : PlayerDeathEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
 	player.show()
 	player.accept_input = true
+	player.collision_shape.set_deferred("disabled", false)
 	
 	player.death_timer.stop()
