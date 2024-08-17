@@ -107,4 +107,3 @@ static func _deep_variant_to_variant(deep_variant : Variant) -> Variant:
 		return _deep_array_to_array(deep_variant)
 	else:
 		return deep_variant
-

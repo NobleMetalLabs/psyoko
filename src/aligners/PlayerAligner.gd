@@ -40,27 +40,37 @@ func _do_movement(event : PlayerMoveEvent) -> void:
 	var player = MultiplayerManager.peer_id_to_player[event.player_id]
 	if player == null: return
 	player.position += Vector2(event.direction) * Psyoko.TILE_SIZE
+	
+	for object_id in event.additional_object_ids: 
+		var pushed = UIDDB.object(object_id)
+		pushed.position += Vector2(event.direction) * Psyoko.TILE_SIZE
 
 func _undo_movement(event : PlayerMoveEvent) -> void:
 	var player = MultiplayerManager.peer_id_to_player[event.player_id]
 	if player == null: return
 	player.position -= Vector2(event.direction) * Psyoko.TILE_SIZE
+	for pushed in event.additional_objects: pushed.position -= Vector2(event.direction) * Psyoko.TILE_SIZE
 
 
 
 func _do_spawn(event : PlayerSpawnEvent) -> void:
 	var new_player : Player = Router.game.make_player(event.player_id)
 	new_player.position = event.location
+	
+	# TODO: Murder this code and its entire family
 	MultiplayerManager.player_to_peer_id[new_player] = event.player_id
 	MultiplayerManager.peer_id_to_player[event.player_id] = new_player
+	
+	UIDDB.register_object(new_player, event.player_id)
 
 func _undo_spawn(event : PlayerSpawnEvent) -> void:
 	var player : Player = MultiplayerManager.peer_id_to_player[event.player_id]
 	MultiplayerManager.player_to_peer_id.erase(player)
 	MultiplayerManager.peer_id_to_player[event.player_id] = null
+	
+	UIDDB.unregister_object(player)
 	if player != null:
 		player.queue_free()
-
 
 
 func _do_attack(event : PlayerAttackEvent) -> void:

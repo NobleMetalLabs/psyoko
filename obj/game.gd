@@ -6,6 +6,10 @@ func _ready():
 	if args.has("-client"):
 		for bus_idx : int in range(0, AudioServer.bus_count):
 			AudioServer.set_bus_mute(bus_idx, true)
+	
+	# TEMPORARY SOLUTION
+	for box : Box in world.get_node("boxes").get_children():
+		UIDDB.register_object(box, hash(box.position))
 
 var players : Array[Player] = []
 var player_scene : PackedScene = load("res://obj/player/Player.tscn")
@@ -32,18 +36,17 @@ func make_player(peer_id : int) -> Player:
 	return player
 
 func move_player(player : Player, direction : Vector2) -> void:
-	player.move_cast.force_raycast_update()
-	var collision_check = player.move_cast.get_collider()
-	if collision_check is TileMapLayer: return
+	var pushed_objects = player.collision_check(direction)
+	if not pushed_objects.is_empty() and pushed_objects.back() is TileMapLayer: return
 	
 	var flipped : Vector2 = Vector2(direction.x, -direction.y)
-	Aligner.submit_event(PlayerMoveEvent.setup(player, flipped))
+	Aligner.submit_event(PlayerMoveEvent.setup(player, flipped, pushed_objects))
 
 func player_attacks(player : Player, direction : Vector2, is_long : bool) -> void:
 	Aligner.submit_event(PlayerAttackEvent.setup(player, direction, is_long))
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("debug"):
-		var event : Event = PlayerMoveEvent.setup(MultiplayerManager.get_local_player(), Vector2i.RIGHT)
+		var event : Event = PlayerMoveEvent.setup(MultiplayerManager.get_local_player(), Vector2i.RIGHT, [])
 		event.time = 0
 		Aligner.submit_event(event)

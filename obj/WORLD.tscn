@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=4 uid="uid://gopi1vs5xgml"]
+[gd_scene load_steps=3 format=4 uid="uid://gopi1vs5xgml"]
 
 [ext_resource type="TileSet" uid="uid://cxvkjx1xiay6t" path="res://ast/sprite/world/debug-biome-tileset.tres" id="1_ot6yq"]
+[ext_resource type="PackedScene" uid="uid://bvhb130ijmos8" path="res://obj/box/Box.tscn" id="2_mh843"]
 
 [node name="WORLD" type="Node2D"]
 
@@ -8,3 +9,20 @@
 position = Vector2(-8, -8)
 tile_map_data = PackedByteArray("AAD7/wMAAAABAAAAAAD8/wMAAAABAAAAAAD9/wMAAAABAAAAAAD+/wMAAAABAAAAAAD//wMAAAABAAAAAAAAAAMAAAABAAAAAAAEAP7/AAABAAAAAAAEAP//AAABAAAAAAAFAAAAAAABAAAAAAAFAAEAAAABAAAAAAD6//3/AAABAAAAAAD5//3/AAABAAAAAAD4//7/AAABAAAAAAD3/wIAAAABAAAAAAD3/wMAAAABAAAAAAD9//v/AAABAAAAAAD9//r/AAABAAAAAAD+//r/AAABAAAAAAD///r/AAABAAAAAAAAAPr/AAABAAAAAAABAPr/AAABAAAAAAACAPr/AAABAAAAAAADAPr/AAABAAAAAAAIAPz/AAABAAAAAAAIAP3/AAABAAAAAAAIAP7/AAABAAAAAAAIAP//AAABAAAAAAAIAAAAAAABAAAAAAD5//n/AAABAAAAAAD4//n/AAABAAAAAAA=")
 tile_set = ExtResource("1_ot6yq")
+
+[node name="boxes" type="Node2D" parent="."]
+
+[node name="Box" parent="boxes" instance=ExtResource("2_mh843")]
+position = Vector2(-48, -16)
+
+[node name="Box2" parent="boxes" instance=ExtResource("2_mh843")]
+position = Vector2(0, -48)
+
+[node name="Box3" parent="boxes" instance=ExtResource("2_mh843")]
+position = Vector2(32, 0)
+
+[node name="Box4" parent="boxes" instance=ExtResource("2_mh843")]
+position = Vector2(-112, 0)
+
+[node name="Box5" parent="boxes" instance=ExtResource("2_mh843")]
+position = Vector2(-64, 16)
