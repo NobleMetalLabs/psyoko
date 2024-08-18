@@ -19,7 +19,6 @@ func make_player(peer_id : int) -> Player:
 	var player : Player = player_scene.instantiate()
 	world.add_child(player)
 	player.name = "P%s" % peer_id
-	players.append(player)
 
 	if peer_id == MultiplayerManager.get_peer_id():
 		player.audio_listener.make_current()
@@ -52,3 +51,7 @@ func _process(_delta: float) -> void:
 		var event : Event = ObjectMoveEvent.setup(MultiplayerManager.get_local_player(), Vector2i.RIGHT)
 		event.time = 0
 		Aligner.submit_event(event)
+
+func update_leaderboard() -> void:
+	for player : Player in players:
+		print("%s Kills: %d" % [player.name, player.number_of_kills])

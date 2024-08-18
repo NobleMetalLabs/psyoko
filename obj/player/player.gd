@@ -17,6 +17,8 @@ signal attacked(direction : Vector2i, long : bool)
 var accept_input : bool = false
 var attack_charge_value : float = 0
 
+var number_of_kills : int = 0
+
 func _process(delta: float) -> void:
 	if not accept_input:
 		return

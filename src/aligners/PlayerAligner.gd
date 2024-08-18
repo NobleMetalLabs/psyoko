@@ -37,7 +37,7 @@ func _do_spawn(event : PlayerSpawnEvent) -> void:
 	new_player.position = event.location
 	
 	UIDDB.register_object(new_player, event.player_id)
-	
+	Router.game.players.append(new_player)
 	
 
 func _undo_spawn(event : PlayerSpawnEvent) -> void:
@@ -45,6 +45,7 @@ func _undo_spawn(event : PlayerSpawnEvent) -> void:
 		
 	UIDDB.unregister_object(player)
 	if player != null:
+		Router.game.players.erase(player)
 		player.queue_free()
 
 
@@ -59,7 +60,7 @@ func _do_attack(event : PlayerAttackEvent) -> void:
 			while cast.get_collider() is Player:
 				var attacked_player : Player = cast.get_collider()
 				if attacked_player.visible:
-					Aligner.submit_event(PlayerDeathEvent.setup(attacked_player))
+					Aligner.submit_event(PlayerDeathEvent.setup(attacked_player, player))
 				
 				cast.add_exception(attacked_player)
 				cast.force_raycast_update()
@@ -71,7 +72,7 @@ func _do_attack(event : PlayerAttackEvent) -> void:
 		while player.long_attack_cast.get_collider() is Player:
 			var attacked_player = player.long_attack_cast.get_collider()
 			if attacked_player.visible:
-				Aligner.submit_event(PlayerDeathEvent.setup(attacked_player))
+				Aligner.submit_event(PlayerDeathEvent.setup(attacked_player, player))
 			
 			player.long_attack_cast.add_exception(attacked_player)
 			player.long_attack_cast.force_raycast_update()
@@ -88,17 +89,31 @@ func _fast_forward_attack(event : PlayerAttackEvent, time_seconds : float) -> vo
 
 func _do_death(event : PlayerDeathEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
+	if not player.visible: return
+	
 	player.hide()
 	player.accept_input = false
 	player.collision_shape.set_deferred("disabled", true)
 	
 	player.death_timer.start()
 	#player.death_timer.timeout.connect(print.bind("menu")) # kill this
+	
+	var killer : Player = UIDDB.object(event.killer_id)
+	killer.number_of_kills += 1
+	
+	Router.game.update_leaderboard()
 
 func _undo_death(event : PlayerDeathEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
+	if player.visible: return
+	
 	player.show()
 	player.accept_input = true
 	player.collision_shape.set_deferred("disabled", false)
 	
 	player.death_timer.stop()
+	
+	var killer : Player = UIDDB.object(event.killer_id)
+	killer.number_of_kills -= 1
+	
+	Router.game.update_leaderboard()
