@@ -5,6 +5,7 @@ var chunk_coordinates : Vector2i
 var world_coordinates : Vector2i
 var biome_data : BiomeData
 var areas : Array[Area]
+var subareas : Array[Area]
 #var structures : Array[Structure]
 
 var generation_stage : GENERATION_STAGE = GENERATION_STAGE.NONE

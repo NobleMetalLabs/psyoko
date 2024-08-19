@@ -33,5 +33,3 @@ func get_chunk(chunk_coords : Vector2i, minimum_stage : Chunk.GENERATION_STAGE =
 				break
 
 	return chunk
-
-		

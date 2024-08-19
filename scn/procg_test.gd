@@ -7,10 +7,11 @@ func _ready():
 	var gen_size : int = 0
 	for dx in range(-gen_size, gen_size + 1):
 		for dy in range(-gen_size, gen_size + 1):
-			WorldData.get_chunk(Vector2i(dx, dy), Chunk.GENERATION_STAGE.AREAS)
+			WorldData.get_chunk(Vector2i(dx, dy), Chunk.GENERATION_STAGE.STRUCTURES)
 
 	var biome_layer : TileMapLayer = $"GEN-Biome"
 	var bg_layer : TileMapLayer = $"Background"
+	var subarea_layer : TileMapLayer = $"GEN-Subareas"
 	for chunk in WorldData.chunks:
 		for dx in range(Psyoko.CHUNK_SIZE):
 			for dy in range(Psyoko.CHUNK_SIZE):
@@ -24,5 +25,11 @@ func _ready():
 					vec_to_coord_from_chunk_owner.y == 0 or \
 					vec_to_coord_from_chunk_owner.y == Psyoko.CHUNK_SIZE - 1:
 					bg_layer.set_cell(working_coord, 0, Vector2i(5, 0))
+		
+		var i = 0
+		for subarea : Area in chunk.subareas:
+			for coord in subarea.get_coordinates():
+				subarea_layer.set_cell(coord, 0, Vector2i(4, i))
+			i += 1
 
 	bg_layer.set_cell(Vector2i(0, 0), 0, Vector2i(5, 8))
