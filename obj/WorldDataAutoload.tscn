@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8gnpq4daugdb"]
+
+[ext_resource type="Script" path="res://lib/generation/WorldData.gd" id="1_hen64"]
+[ext_resource type="Script" path="res://lib/generation/zoners/AreaZoner.gd" id="2_hk6fc"]
+[ext_resource type="Script" path="res://lib/generation/zoners/BiomeZoner.gd" id="3_2kid8"]
+[ext_resource type="Script" path="res://lib/generation/zoners/StructureZoner.gd" id="4_7p75n"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qu8cp"]
+noise_type = 3
+frequency = 0.0387
+fractal_type = 0
+
+[node name="WorldData" type="Node"]
+script = ExtResource("1_hen64")
+
+[node name="BiomeZoner" type="Node" parent="."]
+script = ExtResource("3_2kid8")
+biome_noise = SubResource("FastNoiseLite_qu8cp")
+
+[node name="AreaZoner" type="Node" parent="."]
+script = ExtResource("2_hk6fc")
+
+[node name="StructureZoner" type="Node" parent="."]
+script = ExtResource("4_7p75n")

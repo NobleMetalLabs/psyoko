@@ -12,14 +12,14 @@ Primarily it is an applied experiment and learning effort for Rollback Netcoding
   - [x] Movement
   - [x] Attacking
   - [x] Death
-  - [ ] Pushable Boxes
-  - [ ] Scoreboard
+  - [x] Pushable Boxes
+  - [/] Scoreboard
 - [ ] World
   - [ ] Tileset
   - [ ] Tile Properties
   - [ ] WFC Structures
   - [ ] WFC Implementation
-  - [ ] Chunk loading
+  - [/] Chunk loading
 - [ ] Polish
   - [ ] Menus
   - [ ] Palettes

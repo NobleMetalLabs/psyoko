@@ -40,7 +40,7 @@ func calculate_regions() -> Array[Array]:
 		while coords_of_tile.size() > 0:
 			var new_region : Array[Vector2i] = [coords_of_tile.pop_front()]
 			for tile_coords in new_region:
-				var neighbors : Array[Vector2i] = biome_layer.get_surrounding_cells(tile_coords)
+				var neighbors : Array[Vector2i] = Psyoko.get_coordinate_neighbors(tile_coords)
 				for cell_coords in neighbors:
 					if cell_coords in new_region: continue
 					if cell_coords in coords_of_tile:

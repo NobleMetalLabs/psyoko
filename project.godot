@@ -26,6 +26,7 @@ MultiplayerManager="*res://src/MultiplayerManager.gd"
 Aligner="*res://src/aligners/Aligner.gd"
 Router="*res://src/Router.gd"
 UIDDB="*res://src/UIDDB.gd"
+WorldData="*res://obj/WorldDataAutoload.tscn"
 
 [display]
 
