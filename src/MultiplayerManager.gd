@@ -16,17 +16,6 @@ func _ready() -> void:
 	multiplayer.peer_connected.connect(on_player_connected)
 	multiplayer.peer_disconnected.connect(on_player_disconnected)
 
-	var auto_connect : Callable = \
-		func auto_connect() -> void:
-			var args := Array(OS.get_cmdline_args())
-			if args.has("-lan"):
-				if args.has("-server"):
-					host_lobby(true)
-				elif args.has("-client"):
-					join_lobby()
-	
-	auto_connect.call_deferred()
-
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		if upnp.get_device_count() > 0:
