@@ -22,7 +22,7 @@ func zone(_chunk : Chunk) -> void:
 				chunk_owner.areas.append(new_area)
 			var neighbors : Array[Vector2i] = Psyoko.get_coordinate_neighbors(coord_in_area)
 			for neighbor_coord in neighbors:
-				if neighbor_coord in new_area.get_coordinates(): continue
+				if new_area.has_coordinate(neighbor_coord): continue
 				if not neighbor_coord in relevant_tile_values.keys(): continue
 				if relevant_tile_values[neighbor_coord] != area_value: continue
 				new_area.add_coordinate(neighbor_coord)

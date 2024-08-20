@@ -2,10 +2,11 @@ class_name StructureZoner
 extends Zoner
 
 func zone(chunk : Chunk) -> void:
-	var num_structures_in_area : int = 3
 	var subareas : Array[Area]
 	
 	for area : Area in chunk.areas:
+		var num_structures_in_area = round(area.get_coordinates().size() / 1000.0) + 1
+		
 		var unaccounted_tiles : Array[Vector2i] = area.get_coordinates().duplicate()
 		var unexpanded_tiles_in_subarea : Dictionary = {}
 		
@@ -34,7 +35,42 @@ func zone(chunk : Chunk) -> void:
 					
 				unexpanded_tiles_in_subarea[subarea] = new_unexpanded_tiles
 	
-	# TODO: todd rectangle
-	
+	var structures : Array[Structure] = []
+	for subarea : Area in subareas:
+		var largest_rect : Rect2i = _largest_rect_in_subarea(subarea)
+		structures.append(Structure.new(largest_rect, randi_range(0, 10)))
+
+	chunk.structures = structures
 	chunk.subareas = subareas
 	chunk.generation_stage = Chunk.GENERATION_STAGE.STRUCTURES
+
+func _largest_rect_in_subarea(subarea : Area) -> Rect2i:
+	var largest_rect := Rect2i()
+	for start_pos : Vector2i in subarea.get_coordinates():
+		# go all the way down
+		var height = 1
+		while subarea.has_coordinate(start_pos + Vector2i(0, height)): height += 1
+		
+		# try to expand right until fail
+		var right_width = 1
+		while true:
+			var hit_edge = false
+			for h in range(height):
+				if not subarea.has_coordinate(start_pos + Vector2i(right_width, h)): hit_edge = true
+			if hit_edge: break
+			right_width += 1
+		# try to expand left until fail
+		var left_width = 1
+		while true:
+			var hit_edge = false
+			for h in range(height):
+				if not subarea.has_coordinate(start_pos + Vector2i(-left_width, h)): hit_edge = true
+			if hit_edge: break
+			left_width += 1
+		
+		var new_start_pos := Vector2i(start_pos.x - left_width + 1, start_pos.y)
+		var new_rect := Rect2i(new_start_pos, Vector2i(right_width + left_width - 1, height))
+		if new_rect.get_area() > largest_rect.get_area():
+			largest_rect = new_rect
+	
+	return largest_rect

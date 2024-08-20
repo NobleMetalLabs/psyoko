@@ -7,7 +7,7 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_qu8cp"]
 noise_type = 3
-frequency = 0.0387
+frequency = 0.0194
 fractal_type = 0
 
 [node name="WorldData" type="Node"]

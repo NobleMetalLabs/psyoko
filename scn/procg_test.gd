@@ -12,6 +12,7 @@ func _ready():
 	var biome_layer : TileMapLayer = $"GEN-Biome"
 	var bg_layer : TileMapLayer = $"Background"
 	var subarea_layer : TileMapLayer = $"GEN-Subareas"
+	var structure_layer : TileMapLayer = $"GEN-Structures"
 	for chunk in WorldData.chunks:
 		for dx in range(Psyoko.CHUNK_SIZE):
 			for dy in range(Psyoko.CHUNK_SIZE):
@@ -29,7 +30,20 @@ func _ready():
 		var i = 0
 		for subarea : Area in chunk.subareas:
 			for coord in subarea.get_coordinates():
-				subarea_layer.set_cell(coord, 0, Vector2i(4, i))
+				subarea_layer.set_cell(coord, 0, Vector2i(4, i % 10))
 			i += 1
+
+		for structure : Structure in chunk.structures:
+			var bound_points : Array[Vector2i] = []
+			for dx in range(structure.bounds.size.x):
+				bound_points.append(Vector2i(dx, 0))
+				bound_points.append(Vector2i(dx, structure.bounds.size.y - 1))
+			for dy in range(structure.bounds.size.y):
+				bound_points.append(Vector2i(0, dy))
+				bound_points.append(Vector2i(structure.bounds.size.x - 1, dy))
+			for point in bound_points:
+				structure_layer.set_cell(structure.bounds.position + point, 0, Vector2i(3, 9))
+
+
 
 	bg_layer.set_cell(Vector2i(0, 0), 0, Vector2i(5, 8))
