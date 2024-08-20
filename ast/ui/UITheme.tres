@@ -1,0 +1,75 @@
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://buo11jw8ac2ew"]
+
+[ext_resource type="FontFile" uid="uid://d2gqh1qwes1bj" path="res://ast/ui/unifont.ttf" id="1_c4yin"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_17jlr"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_10vtl"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6fg0"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0, 0, 0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ucpns"]
+bg_color = Color(0.12549, 0.12549, 0.12549, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oxoij"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0nso"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgcyx"]
+bg_color = Color(0.313726, 0.313726, 0.313726, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2xxt"]
+bg_color = Color(0.12549, 0.12549, 0.12549, 1)
+
+[resource]
+Button/fonts/font = ExtResource("1_c4yin")
+FileDialog/font_sizes/title_font_size = 32
+FileDialog/fonts/title_font = ExtResource("1_c4yin")
+GraphFrameTitleLabel/font_sizes/font_size = 32
+GraphFrameTitleLabel/fonts/font = ExtResource("1_c4yin")
+GraphNode/styles/panel = SubResource("StyleBoxFlat_17jlr")
+GraphNode/styles/panel_selected = SubResource("StyleBoxFlat_10vtl")
+GraphNode/styles/titlebar = SubResource("StyleBoxFlat_r6fg0")
+GraphNode/styles/titlebar_selected = SubResource("StyleBoxFlat_ucpns")
+GraphNodeTitleLabel/font_sizes/font_size = 16
+GraphNodeTitleLabel/fonts/font = ExtResource("1_c4yin")
+Label/fonts/font = ExtResource("1_c4yin")
+LineEdit/fonts/font = ExtResource("1_c4yin")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_oxoij")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_w0nso")
+MenuBar/constants/outline_size = 0
+MenuBar/fonts/font = ExtResource("1_c4yin")
+PopupMenu/constants/item_end_padding = 5
+PopupMenu/constants/item_start_padding = 5
+PopupMenu/constants/v_separation = 5
+PopupMenu/fonts/font = ExtResource("1_c4yin")
+PopupMenu/fonts/font_separator = ExtResource("1_c4yin")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_mgcyx")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_j2xxt")
+TabBar/fonts/font = ExtResource("1_c4yin")
+TabContainer/fonts/font = ExtResource("1_c4yin")
+TextEdit/fonts/font = ExtResource("1_c4yin")
+Tree/font_sizes/font_size = 16
+Tree/font_sizes/title_button_font_size = 16
+Tree/fonts/font = ExtResource("1_c4yin")
+Tree/fonts/title_button_font = ExtResource("1_c4yin")
