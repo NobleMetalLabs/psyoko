@@ -8,11 +8,16 @@ var _chunk_coords_to_chunks : Dictionary = {} #[Vector2i, Chunk]
 @onready var area_zoner : AreaZoner = $"AreaZoner"
 @onready var structure_zoner : StructureZoner = $"StructureZoner"
 
+@onready var biome_painter : BiomePainter = $"BiomePainter"
+@onready var area_painter : AreaPainter = $"AreaPainter"
+@onready var structure_painter : StructurePainter = $"StructurePainter"
+
 func _add_chunk(chunk : Chunk) -> void:
 	chunks.append(chunk)
 	_chunk_coords_to_chunks[chunk.chunk_coordinates] = chunk
 
-func get_chunk(chunk_coords : Vector2i, minimum_stage : Chunk.GENERATION_STAGE = Chunk.GENERATION_STAGE.NONE) -> Chunk:
+func get_chunk(chunk_coords : Vector2i, minimum_stage : Chunk.GENERATION_STAGE) -> Chunk:
+	print("Getting chunk %s" % chunk_coords)
 	var chunk : Chunk = _chunk_coords_to_chunks.get(chunk_coords, null)
 	if chunk == null:
 		chunk = Chunk.new(chunk_coords)
@@ -28,6 +33,12 @@ func get_chunk(chunk_coords : Vector2i, minimum_stage : Chunk.GENERATION_STAGE =
 				area_zoner.zone(chunk)
 			Chunk.GENERATION_STAGE.AREAS:
 				structure_zoner.zone(chunk)
+			Chunk.GENERATION_STAGE.STRUCTURES:
+				structure_painter.paint(chunk)
+				area_painter.paint(chunk)
+				biome_painter.paint(chunk)
+			Chunk.GENERATION_STAGE.PAINTED:
+				break
 			_:
 				assert(false, "Invalid generation stage: %s" % chunk.generation_stage)
 				break

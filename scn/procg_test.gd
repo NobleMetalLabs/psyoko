@@ -1,18 +1,17 @@
 extends Node2D
 
 func _ready():
-
 	WorldData.biome_zoner.biome_noise.seed = randi()
 
-	var gen_size : int = 0
+	var gen_size : int = 2
 	for dx in range(-gen_size, gen_size + 1):
 		for dy in range(-gen_size, gen_size + 1):
-			WorldData.get_chunk(Vector2i(dx, dy), Chunk.GENERATION_STAGE.STRUCTURES)
+			WorldData.get_chunk(Vector2i(dx, dy), Chunk.GENERATION_STAGE.PAINTED)
 
 	var biome_layer : TileMapLayer = $"GEN-Biome"
-	var bg_layer : TileMapLayer = $"Background"
 	var subarea_layer : TileMapLayer = $"GEN-Subareas"
 	var structure_layer : TileMapLayer = $"GEN-Structures"
+	var bg_layer : TileMapLayer = $"Background"
 	for chunk in WorldData.chunks:
 		for dx in range(Psyoko.CHUNK_SIZE):
 			for dy in range(Psyoko.CHUNK_SIZE):
@@ -42,8 +41,10 @@ func _ready():
 				bound_points.append(Vector2i(0, dy))
 				bound_points.append(Vector2i(structure.bounds.size.x - 1, dy))
 			for point in bound_points:
-				structure_layer.set_cell(structure.bounds.position + point, 0, Vector2i(3, 9))
+				structure_layer.set_cell(structure.bounds.position + point, 0, Vector2i(1, 9))
 
-
-
-	bg_layer.set_cell(Vector2i(0, 0), 0, Vector2i(5, 8))
+		if chunk.unpainted_tiles.size() == 0:
+			for dx in range(Psyoko.CHUNK_SIZE):
+				for dy in range(Psyoko.CHUNK_SIZE):
+					var t_coord = chunk.world_coordinates + Vector2i(dx, dy)
+					bg_layer.set_cell(t_coord, 0, chunk.tile_paint_data.get_value(t_coord))
