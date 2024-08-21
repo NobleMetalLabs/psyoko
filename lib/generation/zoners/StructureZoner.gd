@@ -2,17 +2,24 @@ class_name StructureZoner
 extends Zoner
 
 func zone(chunk : Chunk) -> void:
-	var subareas : Array[Area]
+	var new_subareas : Array[Area]
+	var existing_subareas : Array[Area] = []
 	
 	for area : Area in chunk.areas:
+		var area_existing_subareas : Array[Area] = area.get_subareas()
+		if area_existing_subareas.size() > 0: 
+			existing_subareas.append_array(area_existing_subareas)
+			continue
+
 		var num_structures_in_area = round(area.get_coordinates().size() / 1000.0) + 1
-		
 		var unaccounted_tiles : Array[Vector2i] = area.get_coordinates().duplicate()
 		var unexpanded_tiles_in_subarea : Dictionary = {}
 		
 		for i in range(num_structures_in_area):
 			var subarea := Area.new()
-			subareas.append(subarea)
+			new_subareas.append(subarea)
+			area.add_subarea(subarea)
+			subarea.parent_area = area
 			
 			var starting_tile : Vector2i = unaccounted_tiles.pick_random()
 			
@@ -35,13 +42,18 @@ func zone(chunk : Chunk) -> void:
 					
 				unexpanded_tiles_in_subarea[subarea] = new_unexpanded_tiles
 	
-	var structures : Array[Structure] = []
-	for subarea : Area in subareas:
+	var new_structures : Array[Structure] = []
+	for subarea : Area in new_subareas:
 		var largest_rect : Rect2i = _largest_rect_in_subarea(subarea)
-		structures.append(Structure.new(largest_rect, randi_range(0, 10)))
+		var new_struct := Structure.new(largest_rect, randi_range(0, 10), subarea)
+		new_structures.append(new_struct)
+		subarea.add_structure(new_struct)
 
-	chunk.structures = structures
-	chunk.subareas = subareas
+	print("%s new subareas in chunk %s" % [new_subareas.size(), chunk.world_coordinates])
+	print("%s new structures in chunk %s" % [new_structures.size(), chunk.world_coordinates])
+
+	chunk.structures += new_structures
+	chunk.subareas += new_subareas
 	chunk.generation_stage = Chunk.GENERATION_STAGE.STRUCTURES
 
 func _largest_rect_in_subarea(subarea : Area) -> Rect2i:

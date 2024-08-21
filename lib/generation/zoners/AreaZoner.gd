@@ -10,7 +10,12 @@ func zone(_chunk : Chunk) -> void:
 	chunk = _chunk
 	_reset_tracked_chunks()
 
-	var areas : Array[Area] = []
+	var existing_areas : Array[Area] = chunk.areas
+	for area in existing_areas:
+		for coord in area.get_coordinates():
+			relevant_tile_values.erase(coord)
+
+	var new_areas : Array[Area] = []
 	while relevant_tile_values.size() > 0:
 		var new_area := Area.new()
 		var first_coord : Vector2i = relevant_tile_values.keys().front()
@@ -40,10 +45,10 @@ func zone(_chunk : Chunk) -> void:
 					var adjacent_chunk_coords : Vector2i = chunk_owner.chunk_coordinates + chunk_neighbor_vector
 					var neighbor_chunk : Chunk = WorldData.get_chunk(adjacent_chunk_coords, Chunk.GENERATION_STAGE.BIOMES)
 					add_relevant_chunk(neighbor_chunk)
-
-		areas.append(new_area)
+		new_areas.append(new_area)
 		_reset_tracked_chunks()
 
+	print("%s new areas in chunk %s" % [new_areas.size(), chunk.world_coordinates])
 	chunk.generation_stage = Chunk.GENERATION_STAGE.AREAS
 
 func _reset_tracked_chunks() -> void:

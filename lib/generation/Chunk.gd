@@ -22,3 +22,5 @@ func _init(coordinates : Vector2i) -> void:
 	world_coordinates = coordinates * Psyoko.CHUNK_SIZE
 	biome_data = BiomeData.new()
 	areas = []
+	subareas = []
+	structures = []
