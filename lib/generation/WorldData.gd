@@ -17,7 +17,7 @@ func _add_chunk(chunk : Chunk) -> void:
 	_chunk_coords_to_chunks[chunk.chunk_coordinates] = chunk
 
 func get_chunk(chunk_coords : Vector2i, minimum_stage : Chunk.GENERATION_STAGE) -> Chunk:
-	print("Getting chunk %s" % chunk_coords)
+	#print("Getting chunk %s" % chunk_coords)
 	var chunk : Chunk = _chunk_coords_to_chunks.get(chunk_coords, null)
 	if chunk == null:
 		chunk = Chunk.new(chunk_coords)

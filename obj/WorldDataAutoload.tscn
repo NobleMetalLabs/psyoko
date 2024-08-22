@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8gnpq4daugdb"]
+[gd_scene load_steps=10 format=3 uid="uid://c8gnpq4daugdb"]
 
 [ext_resource type="Script" path="res://lib/generation/WorldData.gd" id="1_hen64"]
 [ext_resource type="Script" path="res://lib/generation/zoners/AreaZoner.gd" id="2_hk6fc"]
 [ext_resource type="Script" path="res://lib/generation/zoners/BiomeZoner.gd" id="3_2kid8"]
 [ext_resource type="Script" path="res://lib/generation/zoners/StructureZoner.gd" id="4_7p75n"]
 [ext_resource type="Script" path="res://lib/generation/painters/StructurePainter.gd" id="5_y2eaf"]
+[ext_resource type="TileSet" uid="uid://x6o1akmo2lqj" path="res://ast/sprite/world/minit-rip-tileset.tres" id="6_rxf6b"]
 [ext_resource type="Script" path="res://lib/generation/painters/AreaPainter.gd" id="6_vu6w2"]
 [ext_resource type="Script" path="res://lib/generation/painters/BiomePainter.gd" id="7_a08ct"]
 
@@ -28,6 +29,7 @@ script = ExtResource("4_7p75n")
 
 [node name="StructurePainter" type="Node" parent="."]
 script = ExtResource("5_y2eaf")
+pattern_tile_set = ExtResource("6_rxf6b")
 
 [node name="AreaPainter" type="Node" parent="."]
 script = ExtResource("6_vu6w2")
