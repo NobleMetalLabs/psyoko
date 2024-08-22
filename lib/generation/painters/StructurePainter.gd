@@ -19,17 +19,15 @@ func paint(chunk : Chunk) -> void:
 				if (pattern_size.length_squared() > largest_size):
 					largest_size = pattern_size.length_squared()
 					largest_pattern = pattern
-		print("Chunk world coords %s" % chunk.world_coordinates)
-		print("Structure bounds %s" % structure.bounds)
-		print("Pattern size %s" % largest_pattern.get_size())
-		for x in range(largest_pattern.get_size().x):
-			for y in range(largest_pattern.get_size().y):
-				var pattern_cell := Vector2i(x,y)
-				var tile_coord = structure.bounds.position + pattern_cell
+		
+		for dx in range(largest_pattern.get_size().x):
+			for dy in range(largest_pattern.get_size().y):
+				var pattern_cell := Vector2i(dx,dy)
+				if not largest_pattern.has_cell(pattern_cell): continue
 				
-				#print("Checking tile %s" % tile_coord)
+				var pattern_offset = structure.bounds.get_center() - (largest_pattern.get_size() / 2)
+				var tile_coord = pattern_cell + pattern_offset
+				
 				if chunk.unpainted_tiles.has(tile_coord):
-					#print("Attempting to paint tile %s with pattern cell %s" % [tile_coord, pattern_cell])
-					if largest_pattern.has_cell(pattern_cell):
-						chunk.tile_paint_data.set_value(tile_coord, largest_pattern.get_cell_atlas_coords(pattern_cell))
-						chunk.unpainted_tiles.erase(tile_coord)
+					chunk.tile_paint_data.set_value(tile_coord, largest_pattern.get_cell_atlas_coords(pattern_cell))
+					chunk.unpainted_tiles.erase(tile_coord)

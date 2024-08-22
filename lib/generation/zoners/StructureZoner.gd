@@ -3,12 +3,12 @@ extends Zoner
 
 func zone(chunk : Chunk) -> void:
 	var new_subareas : Array[Area]
-	var existing_subareas : Array[Area] = []
+	#var existing_subareas : Array[Area] = []
 	
 	for area : Area in chunk.areas:
 		var area_existing_subareas : Array[Area] = area.get_subareas()
 		if area_existing_subareas.size() > 0: 
-			existing_subareas.append_array(area_existing_subareas)
+			#existing_subareas.append_array(area_existing_subareas)
 			continue
 
 		var num_structures_in_area = round(area.get_coordinates().size() / 1000.0) + 1
@@ -48,12 +48,20 @@ func zone(chunk : Chunk) -> void:
 		var new_struct := Structure.new(largest_rect, randi_range(0, 10), subarea)
 		new_structures.append(new_struct)
 		subarea.add_structure(new_struct)
+		
+		var tl : Vector2 = (Vector2(new_struct.bounds.position) / Psyoko.CHUNK_SIZE).floor()
+		var br : Vector2 = (Vector2(new_struct.bounds.position + new_struct.bounds.size - Vector2i(1,1)) / Psyoko.CHUNK_SIZE).floor()
+		
+		for dx in range(tl.x, br.x + 1):
+			for dy in range(tl.y, br.y + 1):
+				WorldData.get_chunk(Vector2i(dx, dy), Chunk.GENERATION_STAGE.NONE).structures.append(new_struct)
 
-	print("%s new subareas in chunk %s" % [new_subareas.size(), chunk.world_coordinates])
-	print("%s new structures in chunk %s" % [new_structures.size(), chunk.world_coordinates])
 
-	chunk.structures += new_structures
-	chunk.subareas += new_subareas
+	#print("%s new subareas made by chunk %s" % [new_subareas.size(), chunk.world_coordinates])
+	#print("%s new structures made by chunk %s" % [new_structures.size(), chunk.world_coordinates])
+
+	# TODO: make subarea assignment intelligent
+	#chunk.subareas += new_subareas
 	chunk.generation_stage = Chunk.GENERATION_STAGE.STRUCTURES
 
 func _largest_rect_in_subarea(subarea : Area) -> Rect2i:

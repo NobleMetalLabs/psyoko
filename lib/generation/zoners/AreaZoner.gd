@@ -44,11 +44,12 @@ func zone(_chunk : Chunk) -> void:
 				for chunk_neighbor_vector in adjacent_relevant_chunk_vectors:
 					var adjacent_chunk_coords : Vector2i = chunk_owner.chunk_coordinates + chunk_neighbor_vector
 					var neighbor_chunk : Chunk = WorldData.get_chunk(adjacent_chunk_coords, Chunk.GENERATION_STAGE.BIOMES)
-					add_relevant_chunk(neighbor_chunk)
+					add_relevant_chunk(neighbor_chunk, new_area)
+					
 		new_areas.append(new_area)
 		_reset_tracked_chunks()
 
-	print("%s new areas in chunk %s" % [new_areas.size(), chunk.world_coordinates])
+	#print("%s new areas made by chunk %s" % [new_areas.size(), chunk.world_coordinates])
 	chunk.generation_stage = Chunk.GENERATION_STAGE.AREAS
 
 func _reset_tracked_chunks() -> void:
@@ -57,7 +58,7 @@ func _reset_tracked_chunks() -> void:
 	relevant_tile_values.clear()
 	add_relevant_chunk(chunk)
 
-func add_relevant_chunk(new_chunk : Chunk) -> void:
+func add_relevant_chunk(new_chunk : Chunk, relevant_area : Area = null) -> void:
 	if new_chunk in relevant_chunks: return
 	relevant_chunks.append(new_chunk)
 
@@ -70,11 +71,14 @@ func add_relevant_chunk(new_chunk : Chunk) -> void:
 		for coord in area.get_coordinates():
 			accounted_for_coords.append(coord)
 	
-	for dx : int in range(0, Psyoko.CHUNK_SIZE):
-		for dy : int in range(0, Psyoko.CHUNK_SIZE):
+	for dx : int in range(Psyoko.CHUNK_SIZE):
+		for dy : int in range(Psyoko.CHUNK_SIZE):
 			var coord : Vector2i = new_chunk.world_coordinates + Vector2i(dx, dy)
 			if coord in accounted_for_coords: continue
 			var value : int = new_chunk.biome_data.get_value(coord)
 			if value == 0: continue
 			relevant_tile_values[coord] = value
 			relevant_tile_chunks[coord] = new_chunk
+	
+	if relevant_area == null: return
+	new_chunk.areas.append(relevant_area)
