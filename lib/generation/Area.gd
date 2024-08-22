@@ -2,6 +2,7 @@ class_name Area
 extends Resource
 
 var parent_area : Area = null
+var id : int = -1 # pretty useful but maybe there is a better approach?
 
 var _coordinates : Array[Vector2i]
 

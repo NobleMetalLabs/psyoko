@@ -44,3 +44,6 @@ func get_chunk(chunk_coords : Vector2i, minimum_stage : Chunk.GENERATION_STAGE) 
 				break
 
 	return chunk
+
+func tile_to_chunk_coords(tile_coords : Vector2i) -> Vector2i:
+	return (Vector2(tile_coords) / Psyoko.CHUNK_SIZE).floor()

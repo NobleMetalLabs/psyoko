@@ -25,12 +25,10 @@ func _ready():
 					vec_to_coord_from_chunk_owner.y == 0 or \
 					vec_to_coord_from_chunk_owner.y == Psyoko.CHUNK_SIZE - 1:
 					bg_layer.set_cell(working_coord, 0, Vector2i(5, 0))
-		
-		var i = 0
+
 		for subarea : Area in chunk.subareas:
 			for coord in subarea.get_coordinates():
-				subarea_layer.set_cell(coord, 0, Vector2i(4, i % 10))
-			i += 1
+				subarea_layer.set_cell(coord, 0, Vector2i(4, subarea.id % 10))
 
 		for structure : Structure in chunk.structures:
 			var bound_points : Array[Vector2i] = []
