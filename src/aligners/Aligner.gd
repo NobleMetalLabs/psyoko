@@ -3,12 +3,13 @@ extends Node
 
 var event_list : Array[Event] = []
 
-var time_start : int = 0
-func reset_time() -> void:
-	time_start = Time.get_ticks_msec()
+var start_time : int = Time.get_ticks_msec()
+
+func set_start_time(time : int) -> void:
+	start_time = time
 
 func get_time() -> int:
-	return Time.get_ticks_msec() - time_start
+	return Time.get_ticks_msec() + start_time
 
 func _ready():
 	self.add_child(ObjectAligner.new())
@@ -19,8 +20,8 @@ func _ready():
 		func handle_network_message(_sender_id : int, message : String, args : Array) -> void:
 		if message == "event":
 			_handle_event(args[0])
-		if message == "time/reset":
-			reset_time()
+		if message == "game/state_init":
+			set_start_time(args[0])
 	)
 
 func submit_event(new_event : Event) -> void:
