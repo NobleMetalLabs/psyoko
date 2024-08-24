@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqqu43wbn2ks"]
+
+[ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/UITheme.tres" id="1_4kjn0"]
+[ext_resource type="Script" path="res://scn/server_menu.gd" id="2_u6hl6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mptfm"]
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_l5hqt"]
+font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ac6e"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="SERVER_MENU" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_4kjn0")
+script = ExtResource("2_u6hl6")
+
+[node name="__" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="PanelContainer" parent="__"]
+custom_minimum_size = Vector2(600, 330)
+layout_mode = 2
+
+[node name="margins" type="MarginContainer" parent="__/BG"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="__" type="VBoxContainer" parent="__/BG/margins"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Title" type="Label" parent="__/BG/margins/__"]
+layout_mode = 2
+text = "Change Server"
+label_settings = SubResource("LabelSettings_mptfm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ServerIPStack" type="HBoxContainer" parent="__/BG/margins/__"]
+layout_mode = 2
+
+[node name="ServerIPLabel" type="Label" parent="__/BG/margins/__/ServerIPStack"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Server IP: "
+label_settings = SubResource("LabelSettings_l5hqt")
+
+[node name="ServerIPLineEdit" type="LineEdit" parent="__/BG/margins/__/ServerIPStack"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "000.000.000.000"
+alignment = 2
+
+[node name="Control" type="Control" parent="__/BG/margins/__"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="JoinButton" type="Button" parent="__/BG/margins/__"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/align_to_largest_stylebox = 1
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_7ac6e")
+text = " Join "

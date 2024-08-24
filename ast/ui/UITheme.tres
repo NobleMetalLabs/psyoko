@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://buo11jw8ac2ew"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://buo11jw8ac2ew"]
 
 [ext_resource type="FontFile" uid="uid://d2gqh1qwes1bj" path="res://ast/ui/unifont.ttf" id="1_c4yin"]
 
@@ -25,15 +25,23 @@ bg_color = Color(0.12549, 0.12549, 0.12549, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0nso"]
 bg_color = Color(0, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 expand_margin_left = 5.0
 expand_margin_top = 5.0
 expand_margin_right = 5.0
 expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ynw8f"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgcyx"]
 bg_color = Color(0.313726, 0.313726, 0.313726, 1)
@@ -59,6 +67,7 @@ LineEdit/styles/focus = SubResource("StyleBoxEmpty_oxoij")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_w0nso")
 MenuBar/constants/outline_size = 0
 MenuBar/fonts/font = ExtResource("1_c4yin")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_ynw8f")
 PopupMenu/constants/item_end_padding = 5
 PopupMenu/constants/item_start_padding = 5
 PopupMenu/constants/v_separation = 5
