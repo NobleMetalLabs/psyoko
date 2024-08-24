@@ -51,7 +51,6 @@ func _ready():
 	# for box : Pushable in world.get_node("boxes").get_children():
 	# 	UIDDB.register_object(box, hash(box.position))
 
-var players : Array[Player] = []
 var player_scene : PackedScene = load("res://obj/player/Player.tscn")
 
 @onready var world : Node2D = $"%WORLD"
@@ -92,6 +91,11 @@ func _process(_delta: float) -> void:
 		event.time = 0
 		Aligner.submit_event(event)
 
+func you_died() -> void:
+	play_menu.show()
+
 func update_leaderboard() -> void:
-	for player : Player in players:
+	for player_id : int in MultiplayerManager.peer_ids:
+		if not UIDDB.has_uid(player_id): continue
+		var player : Player = UIDDB.object(player_id)
 		print("%s Kills: %d" % [player.name, player.number_of_kills])

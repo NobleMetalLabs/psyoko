@@ -41,22 +41,22 @@ func fast_forward_event(event : Event, time_seconds : float) -> void:
 
 
 func _do_spawn(event : PlayerSpawnEvent) -> void:
-	var new_player : Player = Router.game.make_player(event.player_id)
-	new_player.position = event.location
+	var player : Player = Router.game.make_player(event.player_id)
+	player.position = event.location
 	
-	UIDDB.register_object(new_player, event.player_id)
-	Router.game.players.append(new_player)
+	player.death_timer.timeout.connect(_actually_do_death.bind(player))
+
+	UIDDB.register_object(player, event.player_id)
 	
 
 func _undo_spawn(event : PlayerSpawnEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
 		
+	player.death_timer.timeout.disconnect(_actually_do_death.bind(player))
+	
 	UIDDB.unregister_object(player)
 	if player != null:
-		Router.game.players.erase(player)
 		player.queue_free()
-
-
 
 func _do_attack(event : PlayerAttackEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
@@ -103,13 +103,19 @@ func _do_death(event : PlayerDeathEvent) -> void:
 	player.accept_input = false
 	player.collision_shape.set_deferred("disabled", true)
 	
-	player.death_timer.start()
-	#player.death_timer.timeout.connect(print.bind("menu")) # kill this
+	player.death_timer.start(2)
 	
 	var killer : Player = UIDDB.object(event.killer_id)
 	killer.number_of_kills += 1
 	
 	Router.game.update_leaderboard()
+
+func _actually_do_death(player : Player) -> void:
+	if player == MultiplayerManager.get_local_player():
+		Router.game.you_died()
+
+	UIDDB.unregister_object(player)
+	player.queue_free()
 
 func _undo_death(event : PlayerDeathEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
@@ -123,5 +129,9 @@ func _undo_death(event : PlayerDeathEvent) -> void:
 	
 	var killer : Player = UIDDB.object(event.killer_id)
 	killer.number_of_kills -= 1
-	
-	Router.game.update_leaderboard()
+
+func _fast_forward_death(event : PlayerDeathEvent, time_seconds : float) -> void:
+	var player : Player = UIDDB.object(event.player_id)
+	if not player.visible: return
+
+	player.death_timer.start(player.death_timer.time_left - time_seconds)

@@ -10,8 +10,13 @@ const MAX_ZOOM : float = 0.5
 func _process(_delta) -> void:
 	var my_player : Player = MultiplayerManager.get_local_player()
 
-	if my_player == null: return
+	if my_player != null:
+		if my_player.visible == true:
+			do_live_cam(my_player)
+			return
+	do_dead_cam()
 
+func do_live_cam(my_player : Player) -> void:
 	var nearest_player : Player = my_player
 	var nearest_player_distance : float = (Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE) ** 2 
 	for player_id in MultiplayerManager.peer_ids:
@@ -31,6 +36,9 @@ func _process(_delta) -> void:
 	view_rect = view_rect.grow(SCREEN_PADDING * Psyoko.SCREEN_SCALE)
 
 	set_to_rect(view_rect)
+
+func do_dead_cam() -> void:
+	self.zoom = self.zoom.move_toward(Vector2.ONE * 0.25, ZOOM_RATE / 100)
 
 @onready var viewport_rect = get_viewport_rect()
 func set_to_rect(rect : Rect2) -> void:

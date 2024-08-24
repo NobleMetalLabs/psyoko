@@ -11,7 +11,6 @@ func make_world(world_seed : int = 0):
 	if world_seed == 0: WorldData.biome_zoner.biome_noise.seed = randi()
 	else: WorldData.biome_zoner.biome_noise.seed = world_seed
 	
-	print(WorldData.biome_zoner.biome_noise.seed)
 	seed(WorldData.biome_zoner.biome_noise.seed)
 
 	var gen_size : int = 0

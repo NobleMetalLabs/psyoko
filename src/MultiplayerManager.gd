@@ -7,7 +7,7 @@ const PORT = 31570
 func send_network_message(message : String, args : Array, recipient_id : int = -1, remote_only : bool = false) -> void:
 	var msg_obj := NetworkMessage.setup(get_peer_id(), message, args)
 	var msg_dict : Dictionary = msg_obj.serialize()
-	print("%s : Sending message %s" % [get_peer_id(), msg_obj])
+	#print("%s : Sending message %s" % [get_peer_id(), msg_obj])
 	#print("%s : Sending message %s" % [get_peer_id(), msg_dict])
 	if recipient_id == -1:
 		rpc("receive_network_message", var_to_bytes(msg_dict))
@@ -22,7 +22,7 @@ func receive_network_message(bytes : PackedByteArray) -> void:
 	var msg_dict : Dictionary = bytes_to_var(bytes)
 	#print("\n%s : Handling message \n%s\n" % [get_peer_id(), JSON.stringify(msg_dict, "\t")])
 	var message : NetworkMessage = Serializeable.deserialize(msg_dict)
-	print("%s : Handling message %s" % [get_peer_id(), message])
+	#print("%s : Handling message %s" % [get_peer_id(), message])
 	received_network_message.emit(message.sender_peer_id, message.message, message.args)
 
 var multiplayer_peer := ENetMultiplayerPeer.new()
