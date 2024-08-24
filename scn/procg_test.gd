@@ -13,7 +13,7 @@ func make_world(world_seed : int = 0):
 	
 	seed(WorldData.biome_zoner.biome_noise.seed)
 
-	var gen_size : int = 0
+	var gen_size : int = 3
 	for dx in range(-gen_size, gen_size + 1):
 		for dy in range(-gen_size, gen_size + 1):
 			WorldData.get_chunk(Vector2i(dx, dy), Chunk.GENERATION_STAGE.PAINTED)

@@ -98,4 +98,4 @@ func update_leaderboard() -> void:
 	for player_id : int in MultiplayerManager.peer_ids:
 		if not UIDDB.has_uid(player_id): continue
 		var player : Player = UIDDB.object(player_id)
-		print("%s Kills: %d" % [player.name, player.number_of_kills])
+		#print("%s Kills: %d" % [player.name, player.number_of_kills])
