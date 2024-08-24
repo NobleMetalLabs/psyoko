@@ -3,13 +3,15 @@ extends Node
 
 var event_list : Array[Event] = []
 
-var start_time : int = Time.get_ticks_msec()
+var server_start_time : int = Time.get_ticks_msec()
+var local_start_time : int = Time.get_ticks_msec()
 
 func set_start_time(time : int) -> void:
-	start_time = time
+	server_start_time = time
+	local_start_time = Time.get_ticks_msec()
 
 func get_time() -> int:
-	return Time.get_ticks_msec() + start_time
+	return Time.get_ticks_msec() + server_start_time - local_start_time
 
 func _ready():
 	self.add_child(ObjectAligner.new())

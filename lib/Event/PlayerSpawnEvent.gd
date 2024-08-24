@@ -5,6 +5,9 @@ var time : int
 var player_id : int
 var location : Vector2i
 
+func _to_string() -> String:
+	return "PlayerSpawnEvent(%s, %s, %s)" % [time, player_id, location]
+
 static func setup(peer_id : int, _location : Vector2i = Vector2i.ZERO) -> PlayerSpawnEvent:
 	var event : PlayerSpawnEvent = PlayerSpawnEvent.new()
 	event.player_id = peer_id

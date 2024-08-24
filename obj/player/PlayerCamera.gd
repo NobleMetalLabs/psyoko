@@ -15,6 +15,7 @@ func _process(_delta) -> void:
 	var nearest_player : Player = my_player
 	var nearest_player_distance : float = (Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE) ** 2 
 	for player_id in MultiplayerManager.peer_ids:
+		if not UIDDB.has_uid(player_id): continue
 		var player = UIDDB.object(player_id)
 		if player == my_player:
 			continue

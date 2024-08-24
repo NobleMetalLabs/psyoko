@@ -3,6 +3,9 @@ extends Node
 
 @onready var menu_ui : MainMenu = $"%MAIN-MENU"
 
+# temporary
+@onready var procgen = $"%WORLD".get_child(0)
+
 func _ready():
 	menu_ui.play_requested.connect(
 		func(player_name : String, private_server : bool, server_ip : String) -> void:

@@ -55,12 +55,17 @@ func host_lobby(over_lan : bool = false) -> void:
 	multiplayer_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 	print("Server started on port %s with clientid %s" % [PORT, get_peer_id()])
+	peer_ids.append(get_peer_id())
 	player_connected.emit(get_peer_id())
+	Aligner.submit_event(PlayerSpawnEvent.setup(1))
+	
+	Router.game.procgen.make_world()
 
 func join_lobby(address : String = "127.0.0.1") -> void:
 	multiplayer_peer.create_client(address, PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 	print("Joined server with clientid %s" % [get_peer_id()])
+	peer_ids.append(get_peer_id())
 	player_connected.emit(get_peer_id())
 
 func exit_lobby() -> void:
@@ -75,9 +80,16 @@ func on_player_connected(peer_id : int) -> void:
 	player_connected.emit(peer_id)
 	
 	if is_instance_server():
-		send_network_message("game/state_init", [Aligner.get_time()], peer_id, true)
-	
-	Aligner.submit_event(PlayerSpawnEvent.setup(peer_id))
+		var player_id_to_position : Dictionary = {}
+		for player_id in peer_ids:
+			if not UIDDB.has_uid(player_id): continue
+			var player = UIDDB.object(player_id)
+			player_id_to_position[player_id] = player.position
+		
+		send_network_message("game/state_init", [Aligner.get_time(), player_id_to_position, WorldData.biome_zoner.biome_noise.seed], peer_id, true)
+		
+	else:
+		Aligner.submit_event(PlayerSpawnEvent.setup(get_peer_id()))
 
 func on_player_disconnected(peer_id : int) -> void:
 	if peer_id == 1:
@@ -90,7 +102,7 @@ func on_player_disconnected(peer_id : int) -> void:
 func send_network_message(message : String, args : Array, recipient_id : int = -1, remote_only : bool = false) -> void:
 	var msg_obj := NetworkMessage.setup(get_peer_id(), message, args)
 	var msg_dict : Dictionary = msg_obj.serialize()
-	#print("%s : Sending message %s" % [get_peer_id(), msg_obj])
+	print("%s : Sending message %s" % [get_peer_id(), msg_obj])
 	#print("%s : Sending message %s" % [get_peer_id(), msg_dict])
 	if recipient_id == -1:
 		rpc("receive_network_message", var_to_bytes(msg_dict))
@@ -104,7 +116,7 @@ func receive_network_message(bytes : PackedByteArray) -> void:
 	var msg_dict : Dictionary = bytes_to_var(bytes)
 	#print("\n%s : Handling message \n%s\n" % [get_peer_id(), JSON.stringify(msg_dict, "\t")])
 	var message : NetworkMessage = Serializeable.deserialize(msg_dict)
-	#print("%s : Handling message %s" % [get_peer_id(), message])
+	print("%s : Handling message %s" % [get_peer_id(), message])
 	received_network_message.emit(message.sender_peer_id, message.message, message.args)
 
 signal received_network_message(sender_id : int, message : String, args : Array)

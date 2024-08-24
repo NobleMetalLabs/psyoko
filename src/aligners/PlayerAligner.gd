@@ -7,8 +7,16 @@ func _ready():
 	Aligner.do_event.connect(do_event)
 	Aligner.undo_event.connect(undo_event)
 	Aligner.fast_forward_event.connect(fast_forward_event)
+	
+	MultiplayerManager.received_network_message.connect(
+		func handle_network_message(_sender_id : int, message : String, args : Array) -> void:
+		if message == "game/state_init":
+			init_players(args[1])
+	)
 
-
+func init_players(pi2p : Dictionary):
+	for player_id in pi2p:
+		_do_spawn(PlayerSpawnEvent.setup(player_id, pi2p[player_id]))
 
 func do_event(event : Event) -> void:
 	if event is PlayerSpawnEvent:
