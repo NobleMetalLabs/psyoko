@@ -67,7 +67,7 @@ func _do_attack(event : PlayerAttackEvent) -> void:
 			cast.force_raycast_update()
 			while cast.get_collider() is Player:
 				var attacked_player : Player = cast.get_collider()
-				if attacked_player.visible:
+				if attacked_player.visible and attacked_player != player: 
 					Aligner.submit_event(PlayerDeathEvent.setup(attacked_player, player))
 				
 				cast.add_exception(attacked_player)
@@ -80,7 +80,8 @@ func _do_attack(event : PlayerAttackEvent) -> void:
 		while player.long_attack_cast.get_collider() is Player:
 			var attacked_player = player.long_attack_cast.get_collider()
 			if attacked_player.visible:
-				Aligner.submit_event(PlayerDeathEvent.setup(attacked_player, player))
+				if attacked_player.visible and attacked_player != player: 
+					Aligner.submit_event(PlayerDeathEvent.setup(attacked_player, player))
 			
 			player.long_attack_cast.add_exception(attacked_player)
 			player.long_attack_cast.force_raycast_update()

@@ -22,8 +22,8 @@ func do_live_cam(my_player : Player) -> void:
 	for player_id in MultiplayerManager.peer_ids:
 		if not UIDDB.has_uid(player_id): continue
 		var player = UIDDB.object(player_id)
-		if player == my_player:
-			continue
+		if player == my_player: continue
+		if not player.visible: continue
 		var player_distance : float = player.global_position.distance_squared_to(my_player.global_position)
 		if player_distance < nearest_player_distance:
 			nearest_player = player
