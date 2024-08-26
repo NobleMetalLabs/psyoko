@@ -27,7 +27,9 @@ func do_event(event : Event) -> void:
 	if audio_stream == null: return
 	
 	# dont play audios that gould have been audioed already
-	if (audio_stream.get_length() * 1000.0) + event.time < Aligner.get_time(): return
+	# NOTE: thing is, this is too harsh because of latency, adding shitty mult to pad it
+	const AUDIO_PAD_MULT : int = 4
+	if int(audio_stream.get_length() * 1000 * AUDIO_PAD_MULT) + event.time < Aligner.get_time(): return
 	
 	var new_audio_player := AudioStreamPlayer2D.new()
 	var object_id : int = -1
