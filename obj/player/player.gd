@@ -7,6 +7,7 @@ extends Pushable
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 
 var attacking : bool = false
+@onready var attack_base : Node2D = $"%AttackBase"
 @onready var normal_attack_holder : Node2D = $"%NormalAttackCasts"
 @onready var long_attack_cast : RayCast2D = $"%LongAttackCast"
 var played_charge_sound : bool = false
@@ -54,7 +55,6 @@ func _process(delta: float) -> void:
 
 	if alternate:
 		var is_long : bool = (attack_charge_value >= 1) # probably make this a const lol
-		$AttackBase.rotation = Vector2(input_vector).angle_to(Vector2i.RIGHT)
 		attack_charge_value = 0
 		played_charge_sound = false
 		

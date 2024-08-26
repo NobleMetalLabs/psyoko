@@ -60,33 +60,29 @@ func _undo_spawn(event : PlayerSpawnEvent) -> void:
 
 func _do_attack(event : PlayerAttackEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
+	player.attack_base.rotation = Vector2(event.direction).angle_to(Vector2i.RIGHT)
 	player.attack_sprite.attack(event.direction, event.is_long)
 	
-	if not event.is_long:
-		for cast : RayCast2D in player.normal_attack_holder.get_children():
+	var attack_casts : Array[RayCast2D] = []
+	if event.is_long: attack_casts.append(player.long_attack_cast)
+	else: attack_casts.append_array(player.normal_attack_holder.get_children())
+	
+	for cast : RayCast2D in attack_casts:
+		cast.force_raycast_update()
+		while cast.get_collider() is Player:
+			
 			cast.force_raycast_update()
-			while cast.get_collider() is Player:
-				var attacked_player : Player = cast.get_collider()
-				if attacked_player.visible and attacked_player != player: 
-					Aligner.submit_event(PlayerDeathEvent.setup(attacked_player, player))
-				
-				cast.add_exception(attacked_player)
-				cast.force_raycast_update()
+			var attacked_player : Player = cast.get_collider()
+			if attacked_player == null: continue
+			cast.add_exception(attacked_player)
 			
-			cast.clear_exceptions()
+			var local_player = MultiplayerManager.get_local_player()
+			if local_player != attacked_player and local_player != player: continue
+			if not attacked_player.visible: continue
+			if attacked_player == player: continue
+			Aligner.submit_event(PlayerDeathEvent.setup(attacked_player, player))
 		
-	else:
-		player.long_attack_cast.force_raycast_update()
-		while player.long_attack_cast.get_collider() is Player:
-			var attacked_player = player.long_attack_cast.get_collider()
-			if attacked_player.visible:
-				if attacked_player.visible and attacked_player != player: 
-					Aligner.submit_event(PlayerDeathEvent.setup(attacked_player, player))
-			
-			player.long_attack_cast.add_exception(attacked_player)
-			player.long_attack_cast.force_raycast_update()
-		
-		player.long_attack_cast.clear_exceptions()
+		cast.clear_exceptions()
 
 func _undo_attack(event : PlayerAttackEvent) -> void:
 	UIDDB.object(event.player_id).attack_sprite.cancel()

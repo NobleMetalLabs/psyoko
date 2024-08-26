@@ -83,10 +83,12 @@ offset = Vector2(10, 1)
 script = ExtResource("7_trxqh")
 
 [node name="MoveCast" type="RayCast2D" parent="."]
+visible = false
 target_position = Vector2(16, 0)
 collide_with_areas = true
 
 [node name="AttackBase" type="Node2D" parent="."]
+unique_name_in_owner = true
 metadata/_edit_lock_ = true
 
 [node name="NormalAttackCasts" type="Node2D" parent="AttackBase"]

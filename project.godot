@@ -35,6 +35,10 @@ window/size/viewport_height=540
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 
+[editor]
+
+run/main_run_args="-server"
+
 [input]
 
 pl_alternate={
