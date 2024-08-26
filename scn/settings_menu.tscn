@@ -1,0 +1,257 @@
+[gd_scene load_steps=12 format=3 uid="uid://41go08s773fn"]
+
+[ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/UITheme.tres" id="1_7bnsp"]
+[ext_resource type="Script" path="res://src/ui/ThemeOverrideOptionButton.gd" id="2_abe18"]
+[ext_resource type="Script" path="res://scn/settings_menu.gd" id="2_hjimy"]
+[ext_resource type="Script" path="res://src/ui/TwoTextToggleButton.gd" id="3_kokrc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yd5no"]
+content_margin_left = 7.0
+content_margin_top = 5.0
+content_margin_right = 7.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+border_width_top = 3
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j31hm"]
+content_margin_left = 7.0
+content_margin_top = 5.0
+content_margin_right = 7.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+border_width_top = 3
+border_color = Color(0.501407, 0.501406, 0.501406, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_im0ib"]
+font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s88n5"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f8o1k"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.670588, 0.670588, 0.670588, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_582v8"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6j2cm"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(1, 1, 1, 1)
+
+[node name="SETTINGS-MENU" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_7bnsp")
+script = ExtResource("2_hjimy")
+
+[node name="__" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="PanelContainer" parent="__"]
+custom_minimum_size = Vector2(600, 330)
+layout_mode = 2
+
+[node name="margins" type="MarginContainer" parent="__/BG"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SETTINGS-TABS" type="TabContainer" parent="__/BG/margins"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_yd5no")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_j31hm")
+tab_alignment = 2
+current_tab = 0
+
+[node name="VIDEO" type="VBoxContainer" parent="__/BG/margins/SETTINGS-TABS"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="ResolutionStack" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/VIDEO"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="__/BG/margins/SETTINGS-TABS/VIDEO/ResolutionStack"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Resolution"
+label_settings = SubResource("LabelSettings_im0ib")
+
+[node name="RESOLUTION-OPTION-BUTTON" type="OptionButton" parent="__/BG/margins/SETTINGS-TABS/VIDEO/ResolutionStack"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+selected = 1
+item_count = 2
+popup/item_0/text = "1920 x 1080"
+popup/item_1/text = "960 x 540"
+popup/item_1/id = 1
+script = ExtResource("2_abe18")
+
+[node name="Borderless" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/VIDEO"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="__/BG/margins/SETTINGS-TABS/VIDEO/Borderless"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Borderless
+"
+label_settings = SubResource("LabelSettings_im0ib")
+
+[node name="BORDERLESS-TOGGLE-BUTTON" type="Button" parent="__/BG/margins/SETTINGS-TABS/VIDEO/Borderless"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_s88n5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_f8o1k")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_582v8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_6j2cm")
+toggle_mode = true
+text = "N
+"
+script = ExtResource("3_kokrc")
+on_text = "Y"
+off_text = "N"
+
+[node name="AUDIO" type="VBoxContainer" parent="__/BG/margins/SETTINGS-TABS"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 35
+metadata/_tab_index = 1
+
+[node name="Main" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/AUDIO"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="__/BG/margins/SETTINGS-TABS/AUDIO/Main"]
+layout_mode = 2
+
+[node name="Main" type="Label" parent="__/BG/margins/SETTINGS-TABS/AUDIO/Main/VBoxContainer"]
+layout_mode = 2
+text = "Main"
+label_settings = SubResource("LabelSettings_im0ib")
+horizontal_alignment = 2
+
+[node name="Game" type="Label" parent="__/BG/margins/SETTINGS-TABS/AUDIO/Main/VBoxContainer"]
+layout_mode = 2
+text = "Game"
+label_settings = SubResource("LabelSettings_im0ib")
+horizontal_alignment = 2
+
+[node name="Ambient" type="Label" parent="__/BG/margins/SETTINGS-TABS/AUDIO/Main/VBoxContainer"]
+layout_mode = 2
+text = "Ambient"
+label_settings = SubResource("LabelSettings_im0ib")
+horizontal_alignment = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="__/BG/margins/SETTINGS-TABS/AUDIO/Main"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MAIN-AUDIO-SLIDER" type="HSlider" parent="__/BG/margins/SETTINGS-TABS/AUDIO/Main/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 1.0
+step = 0.001
+value = 0.5
+
+[node name="GAME-AUDIO-SLIDER" type="HSlider" parent="__/BG/margins/SETTINGS-TABS/AUDIO/Main/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 1.0
+step = 0.001
+value = 0.5
+
+[node name="AMBIENT-AUDIO-SLIDER" type="HSlider" parent="__/BG/margins/SETTINGS-TABS/AUDIO/Main/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 1.0
+step = 0.001
+value = 0.5
+
+[node name="INPUT" type="VBoxContainer" parent="__/BG/margins/SETTINGS-TABS"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 35
+metadata/_tab_index = 2
+
+[node name="Scheme" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/INPUT"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="__/BG/margins/SETTINGS-TABS/INPUT/Scheme"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Input Scheme"
+label_settings = SubResource("LabelSettings_im0ib")
+
+[node name="INPUTSCHEME-OPTION-BUTTON" type="OptionButton" parent="__/BG/margins/SETTINGS-TABS/INPUT/Scheme"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+selected = 0
+item_count = 2
+popup/item_0/text = "WASD"
+popup/item_1/text = "Arrow Keys"
+popup/item_1/id = 1
+script = ExtResource("2_abe18")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="__/BG/margins"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="__/BG/margins/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="SAVE-BUTTON" type="Button" parent="__/BG/margins/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "SAVE"
+
+[node name="__" type="Control" parent="__/BG/margins/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[node name="__" type="Control" parent="__/BG/margins/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
