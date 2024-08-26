@@ -9,29 +9,37 @@ const MAX_ZOOM : float = 0.5
 
 func _process(_delta) -> void:
 	var my_player : Player = MultiplayerManager.get_local_player()
-
 	if my_player != null:
 		if my_player.visible == true:
 			do_live_cam(my_player)
 			return
 	do_dead_cam()
 
+const NEARBY_PLAYER_DISTANCE : float = (Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE) ** 2 
+const CLOSE_PLAYER_DISTANCE : float = NEARBY_PLAYER_DISTANCE / 5
 func do_live_cam(my_player : Player) -> void:
 	var nearest_player : Player = my_player
-	var nearest_player_distance : float = (Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE) ** 2 
+	var nearest_player_distance : float = INF
+	var close_players : Array[Player] = []
 	for player_id in MultiplayerManager.peer_ids:
 		if not UIDDB.has_uid(player_id): continue
 		var player = UIDDB.object(player_id)
 		if player == my_player: continue
 		if not player.visible: continue
 		var player_distance : float = player.global_position.distance_squared_to(my_player.global_position)
+		if player_distance > NEARBY_PLAYER_DISTANCE: continue
+		if player_distance < CLOSE_PLAYER_DISTANCE:
+			close_players.append(player)
 		if player_distance < nearest_player_distance:
-			nearest_player = player
 			nearest_player_distance = player_distance
+			nearest_player = player
 
 	var view_rect : Rect2 = Rect2() 
 	view_rect.position = my_player.global_position
-	view_rect = view_rect.expand(nearest_player.global_position)
+	for close_player in close_players:
+		view_rect = view_rect.expand(close_player.global_position)
+	if close_players.is_empty():
+		view_rect = view_rect.expand(nearest_player.global_position)
 	view_rect = view_rect.expand(my_player.global_position)
 	view_rect = view_rect.grow(SCREEN_PADDING * Psyoko.SCREEN_SCALE)
 

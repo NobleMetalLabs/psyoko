@@ -16,6 +16,7 @@ func _ready():
 		var server_ip : String = ""
 		if ip_arg_idx != -1:
 			server_ip = args[ip_arg_idx + 1]
+		server_menu.join_requested.emit(server_ip)
 		play_menu.play_requested.emit("", true, server_ip)
 	
 	if args.has("-client"):
@@ -27,8 +28,8 @@ func _ready():
 
 	server_menu.join_requested.connect(
 		func(server_ip : String) -> void:
-			if not server_ip.is_valid_ip_address(): return
-			MultiplayerManager.ADDRESS = server_ip
+			if server_ip.is_valid_ip_address():
+				MultiplayerManager.ADDRESS = server_ip
 			MultiplayerManager.join_lobby()
 	)
 
