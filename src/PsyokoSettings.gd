@@ -15,11 +15,16 @@ var _setting_key_to_section : Dictionary = {}
 func _init(parent : Node) -> void:
 	parent.add_child(self)
 
+func _ready() -> void:
+	load_settings_from_disk()
+	apply_settings_to_game()
+
 func get_setting(key : String) -> Variant:
 	return settings[key]
 
-func set_setting(key : String, value : Variant) -> void:
+func set_setting(key : String, value : Variant, apply_setting : bool = true) -> void:
 	settings_config.set_value(_setting_key_to_section[key], key, value)
+	if apply_setting: apply_settings_to_game([key])
 
 func load_settings_from_disk() -> void:
 	var err = settings_config.load("user://settings.cfg")
@@ -36,20 +41,16 @@ func apply_settings_to_game(setting_keys = settings.keys()) -> void:
 		var setting_value = settings[key]
 		match(key):
 			"resolution":
-				# set resolution
-				pass
+				get_window().content_scale_size = settings["resolution"]
+				Psyoko.SCREEN_SCALE = settings["resolution"] / Psyoko.BASE_SCREEN_RES
 			"borderless":
-				# set borderless
-				pass
+				DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, settings["borderless"])
 			"main":
-				# set main audio
-				pass
+				AudioServer.set_bus_volume_db(0, linear_to_db(settings["main"]))
 			"game":
-				# set game audio
-				pass
+				AudioServer.set_bus_volume_db(1, linear_to_db(settings["game"]))
 			"ambient":
-				# set ambient audio
-				pass
+				AudioServer.set_bus_volume_db(2, linear_to_db(settings["ambient"]))
 			"scheme":
 				# set input scheme
 				pass

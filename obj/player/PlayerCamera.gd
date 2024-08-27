@@ -15,8 +15,8 @@ func _process(_delta) -> void:
 			return
 	do_dead_cam()
 
-const NEARBY_PLAYER_DISTANCE : float = (Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE) ** 2 
-const CLOSE_PLAYER_DISTANCE : float = NEARBY_PLAYER_DISTANCE / 5
+var NEARBY_PLAYER_DISTANCE : float = (Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE.x) ** 2 
+var CLOSE_PLAYER_DISTANCE : float = NEARBY_PLAYER_DISTANCE / 5
 func do_live_cam(my_player : Player) -> void:
 	var nearest_player : Player = my_player
 	var nearest_player_distance : float = INF
@@ -41,7 +41,7 @@ func do_live_cam(my_player : Player) -> void:
 	if close_players.is_empty():
 		view_rect = view_rect.expand(nearest_player.global_position)
 	view_rect = view_rect.expand(my_player.global_position)
-	view_rect = view_rect.grow(SCREEN_PADDING * Psyoko.SCREEN_SCALE)
+	view_rect = view_rect.grow(SCREEN_PADDING * Psyoko.SCREEN_SCALE.x)
 
 	set_to_rect(view_rect)
 
@@ -57,5 +57,5 @@ func set_to_rect(rect : Rect2) -> void:
 
 	cam_zoom = cam_zoom.clampf(0, MAX_ZOOM)
 
-	self.position = self.position.move_toward(cam_pos, PAN_RATE * Psyoko.SCREEN_SCALE)
+	self.position = self.position.move_toward(cam_pos, PAN_RATE * Psyoko.SCREEN_SCALE.x)
 	self.zoom = self.zoom.move_toward(cam_zoom, ZOOM_RATE)

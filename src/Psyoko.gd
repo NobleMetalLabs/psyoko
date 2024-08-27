@@ -1,7 +1,8 @@
 #class_name Psyoko
 extends Node
 
-const SCREEN_SCALE : int = 10
+const BASE_SCREEN_RES := Vector2i(192, 108)
+var SCREEN_SCALE := Vector2i.ONE
 
 const TILE_SIZE : int = 16
 const CHUNK_SIZE : int = 16
@@ -19,4 +20,3 @@ func get_coordinate_neighbors(coord : Vector2i, include_diagonals : bool = false
 	return neighbors
 
 @onready var settings : PsyokoSettings = PsyokoSettings.new(self)
-

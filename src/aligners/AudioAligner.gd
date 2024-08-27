@@ -32,6 +32,8 @@ func do_event(event : Event) -> void:
 	if int(audio_stream.get_length() * 1000 * AUDIO_PAD_MULT) + event.time < Aligner.get_time(): return
 	
 	var new_audio_player := AudioStreamPlayer2D.new()
+	new_audio_player.bus = "Game"
+
 	var object_id : int = -1
 	if event.get("object_id") != null:
 		object_id = event.object_id
@@ -46,7 +48,7 @@ func do_event(event : Event) -> void:
 	
 	object.add_child(new_audio_player, true)
 	new_audio_player.stream = audio_stream
-	new_audio_player.max_distance = Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE * 1.25
+	new_audio_player.max_distance = Psyoko.MAX_TARGET_DISTANCE * Psyoko.SCREEN_SCALE.x * 1.25
 	new_audio_player.play()
 	
 	new_audio_player.finished.connect(
