@@ -12,6 +12,14 @@ func _ready():
 	game_audio_slider.mouse_exited.connect(game_audio_slider.release_focus)
 	ambient_audio_slider.mouse_exited.connect(ambient_audio_slider.release_focus)
 
+	$"%SETTINGS-TABS".tab_changed.connect(
+		func(tab_idx : int) -> void:
+			if tab_idx == 1:
+				$"AudioDemo".fade_in() 
+			else:
+				$"AudioDemo".fade_out()
+	)
+
 @onready var resolution_option_button : OptionButton = $"%RESOLUTION-OPTION-BUTTON"
 @onready var borderless_toggle_button : Button = $"%BORDERLESS-TOGGLE-BUTTON"
 
@@ -25,8 +33,8 @@ func _ready():
 func setup_setting_updates() -> void:
 	
 	resolution_option_button.item_selected.connect(
-		func(index):
-			var res_text : String = resolution_option_button.get_item_text(resolution_option_button.selected)
+		func(index : int) -> void:
+			var res_text : String = resolution_option_button.get_item_text(index)
 			var res := Vector2i(res_text.left(res_text.find("x")).to_int(), res_text.right(res_text.find("x") + 1).to_int())
 			
 			Psyoko.settings.set_setting("resolution", res)
@@ -34,25 +42,25 @@ func setup_setting_updates() -> void:
 	)
 	
 	borderless_toggle_button.toggled.connect(
-		func(toggled_on):
+		func(toggled_on : bool) -> void:
 			Psyoko.settings.set_setting("borderless", toggled_on)
 	)
 	
 	main_audio_slider.value_changed.connect(
-		func(value):
+		func(value : float) -> void:
 			Psyoko.settings.set_setting("main", value)
 	)
 	game_audio_slider.value_changed.connect(
-		func(value):
+		func(value : float) -> void:
 			Psyoko.settings.set_setting("game", value)
 	)
 	ambient_audio_slider.value_changed.connect(
-		func(value):
+		func(value : float) -> void:
 			Psyoko.settings.set_setting("ambient", value)
 	)
 	
 	input_scheme_option_button.item_selected.connect(
-		func(index):
+		func(index : int) -> void:
 			Psyoko.settings.set_setting("scheme", index)
 	)
 

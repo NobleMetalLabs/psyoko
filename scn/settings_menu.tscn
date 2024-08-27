@@ -1,9 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://41go08s773fn"]
+[gd_scene load_steps=17 format=3 uid="uid://41go08s773fn"]
 
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/UITheme.tres" id="1_7bnsp"]
 [ext_resource type="Script" path="res://src/ui/ThemeOverrideOptionButton.gd" id="2_abe18"]
 [ext_resource type="Script" path="res://scn/settings_menu.gd" id="2_hjimy"]
 [ext_resource type="Script" path="res://src/ui/TwoTextToggleButton.gd" id="3_kokrc"]
+[ext_resource type="AudioStream" uid="uid://dg68d5c6lmj1a" path="res://ast/sound/game/attack_long.wav" id="5_ceob5"]
+[ext_resource type="Script" path="res://scn/audio_demo.gd" id="5_cgl7l"]
+[ext_resource type="AudioStream" uid="uid://ud73xnv727x7" path="res://ast/sound/game/attack.wav" id="6_j4i4p"]
+[ext_resource type="AudioStream" uid="uid://bt7qxv5c7snsy" path="res://ast/sound/game/move.wav" id="7_rk6pd"]
+[ext_resource type="AudioStream" uid="uid://c2208qi3pvcsn" path="res://ast/sound/environment/light rain 11.wav" id="8_nobmd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yd5no"]
 content_margin_left = 7.0
@@ -84,6 +89,7 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="SETTINGS-TABS" type="TabContainer" parent="__/BG/margins"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_yd5no")
@@ -109,22 +115,10 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 selected = 1
-item_count = 8
-popup/item_0/text = "2560 x 1440"
-popup/item_0/id = 7
-popup/item_1/text = "1920 x 1080"
-popup/item_2/text = "1600 x 900"
-popup/item_2/id = 3
-popup/item_3/text = "1440 x 900"
-popup/item_3/id = 6
-popup/item_4/text = "1360 x 768"
-popup/item_4/id = 5
-popup/item_5/text = "1280 x 720"
-popup/item_5/id = 4
-popup/item_6/text = "960 x 540"
-popup/item_6/id = 1
-popup/item_7/text = "192 x 108"
-popup/item_7/id = 2
+item_count = 2
+popup/item_0/text = "1920 x 1080"
+popup/item_1/text = "960 x 540"
+popup/item_1/id = 1
 script = ExtResource("2_abe18")
 
 [node name="Borderless" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/VIDEO"]
@@ -267,3 +261,27 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 mouse_filter = 2
+
+[node name="AudioDemo" type="Node" parent="."]
+script = ExtResource("5_cgl7l")
+
+[node name="PMove" type="AudioStreamPlayer" parent="AudioDemo"]
+stream = ExtResource("7_rk6pd")
+volume_db = -80.0
+bus = &"Game"
+
+[node name="PAttack" type="AudioStreamPlayer" parent="AudioDemo"]
+stream = ExtResource("6_j4i4p")
+volume_db = -80.0
+bus = &"Game"
+
+[node name="PLAttack" type="AudioStreamPlayer" parent="AudioDemo"]
+stream = ExtResource("5_ceob5")
+volume_db = -80.0
+bus = &"Game"
+
+[node name="Ambient" type="AudioStreamPlayer" parent="AudioDemo"]
+stream = ExtResource("8_nobmd")
+volume_db = -80.0
+autoplay = true
+bus = &"Ambient"
