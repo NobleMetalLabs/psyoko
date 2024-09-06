@@ -5,13 +5,22 @@ extends Node
 @onready var plattack : AudioStreamPlayer = $"PLAttack"
 @onready var ambient : AudioStreamPlayer = $"Ambient"
 
+var fade_in_tween : Tween = null
+var fade_out_tween : Tween = null
+var faded_in : bool = false
+
 func fade_in() -> void:
-	var tween : Tween = get_tree().create_tween()
-	tween.tween_method(set_volume, 0.0, 1.0, 2)
+	fade_in_tween = get_tree().create_tween()
+	if fade_out_tween != null: fade_out_tween.kill()
+	fade_in_tween.tween_method(set_volume, 0.0, 1.0, 2)
+	faded_in = true
 
 func fade_out() -> void:
-	var tween : Tween = get_tree().create_tween()
-	tween.tween_method(set_volume, 1.0, 0.0, 1)
+	if not faded_in: return
+	fade_out_tween = get_tree().create_tween()
+	if fade_in_tween != null: fade_in_tween.kill()
+	fade_out_tween.tween_method(set_volume, 1.0, 0.0, 1)
+	faded_in = false
 
 func set_volume(percent : float) -> void:
 	pmove.volume_db = linear_to_db(percent)
