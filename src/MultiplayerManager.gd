@@ -55,7 +55,7 @@ func host_lobby(over_lan : bool = false) -> void:
 	player_connected.emit(get_peer_id())
 	Aligner.submit_event(PlayerSpawnEvent.setup(1))
 	
-	Router.game.procgen.make_world()
+	Router.game.world.initialize_world()
 
 func join_lobby() -> void:
 	multiplayer_peer.create_client(ADDRESS, PORT)

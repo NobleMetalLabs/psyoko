@@ -4,9 +4,6 @@ extends Node
 @onready var play_menu : PlayMenu = $"%PLAY-MENU"
 @onready var server_menu : ServerMenu = $"%SERVER_MENU"
 
-# temporary
-@onready var procgen = $"%WORLD".get_child(0)
-
 func _ready():
 	var args := Array(OS.get_cmdline_args())
 	if args.has("-server"):
@@ -64,15 +61,16 @@ func make_player(peer_id : int) -> Player:
 		player.audio_listener.make_current()
 		player.accept_input = true
 
-	player.moved.connect(
-		func(direction : Vector2i) -> void:
-		move_player(player, direction)
-	)
-	player.attacked.connect(
-		func(direction : Vector2i, is_long : bool) -> void:
-		player_attacks(player, direction, is_long)
-	)
+		player.moved.connect(
+			func(direction : Vector2i) -> void:
+			move_player(player, direction)
+		)
+		player.attacked.connect(
+			func(direction : Vector2i, is_long : bool) -> void:
+			player_attacks(player, direction, is_long)
+		)
 	return player
+
 
 func move_player(player : Player, direction : Vector2) -> void:
 	var pushed_objects = player.collision_check(direction)
@@ -82,6 +80,8 @@ func move_player(player : Player, direction : Vector2) -> void:
 	Aligner.submit_event(ObjectMoveEvent.setup(player, flipped))
 	for pushed_object in pushed_objects:
 		Aligner.submit_event(ObjectMoveEvent.setup(pushed_object, flipped))
+	
+	
 
 func player_attacks(player : Player, direction : Vector2, is_long : bool) -> void:
 	Aligner.submit_event(PlayerAttackEvent.setup(player, direction, is_long))

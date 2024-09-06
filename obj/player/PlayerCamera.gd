@@ -26,7 +26,7 @@ func do_live_cam(my_player : Player) -> void:
 		var player = UIDDB.object(player_id)
 		if player == my_player: continue
 		if not player.visible: continue
-		var player_distance : float = player.global_position.distance_squared_to(my_player.global_position)
+		var player_distance : float = player.global_position.distance_squared_to(my_player.global_position) / Psyoko.SCREEN_SCALE.x
 		if player_distance > NEARBY_PLAYER_DISTANCE: continue
 		if player_distance < CLOSE_PLAYER_DISTANCE:
 			close_players.append(player)
@@ -41,7 +41,13 @@ func do_live_cam(my_player : Player) -> void:
 	if close_players.is_empty():
 		view_rect = view_rect.expand(nearest_player.global_position)
 	view_rect = view_rect.expand(my_player.global_position)
+	#print("before padding: %s" % view_rect)
+	
 	view_rect = view_rect.grow(SCREEN_PADDING * Psyoko.SCREEN_SCALE.x)
+	#print("after padding: %s" % view_rect)
+	
+	#print("nearby distance: %s" % NEARBY_PLAYER_DISTANCE)
+	#print("close distance: %s" % CLOSE_PLAYER_DISTANCE)
 
 	set_to_rect(view_rect)
 
