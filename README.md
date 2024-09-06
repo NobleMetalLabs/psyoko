@@ -23,5 +23,5 @@ Primarily it is an applied experiment and learning effort for Rollback Netcoding
 - [ ] Polish
   - [ ] Menus
   - [ ] Palettes
-  - [ ] Sound
+  - [/] Sound
   - [ ] Rebinds
