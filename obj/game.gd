@@ -60,11 +60,13 @@ func make_player(peer_id : int, location : Vector2i = Vector2i.ZERO) -> Player:
 	player.position = location
 	player.chunk_coord = WorldData.tile_to_chunk_coords(player.position / Psyoko.TILE_SIZE)
 	
-	world.enter_chunk_by_coord(player.chunk_coord)
 
 	if peer_id == MultiplayerManager.get_peer_id():
 		player.audio_listener.make_current()
 		player.accept_input = true
+		world.enter_chunk_by_coord(player.chunk_coord)
+		
+		#print(player.chunk_coord)
 
 		player.moved.connect(
 			func(direction : Vector2i) -> void:

@@ -45,20 +45,20 @@ func render_chunk(chunk : Chunk) -> void:
 				vec_to_coord_from_chunk_owner.y == Psyoko.CHUNK_SIZE - 1:
 				bg_layer.set_cell(working_coord, 0, Vector2i(5, 0))
 
-	#for subarea : Area in chunk.subareas:
-		#for coord in subarea.get_coordinates():
-			#subarea_layer.set_cell(coord, 0, Vector2i(4, subarea.id % 10))
-#
-	#for structure : Structure in chunk.structures:
-		#var bound_points : Array[Vector2i] = []
-		#for dx in range(structure.bounds.size.x):
-			#bound_points.append(Vector2i(dx, 0))
-			#bound_points.append(Vector2i(dx, structure.bounds.size.y - 1))
-		#for dy in range(structure.bounds.size.y):
-			#bound_points.append(Vector2i(0, dy))
-			#bound_points.append(Vector2i(structure.bounds.size.x - 1, dy))
-		#for point in bound_points:
-			#structure_layer.set_cell(structure.bounds.position + point, 0, Vector2i(1, 9))
+	for subarea : Area in chunk.subareas:
+		for coord in subarea.get_coordinates():
+			subarea_layer.set_cell(coord, 0, Vector2i(4, subarea.id % 10))
+
+	for structure : Structure in chunk.structures:
+		var bound_points : Array[Vector2i] = []
+		for dx in range(structure.bounds.size.x):
+			bound_points.append(Vector2i(dx, 0))
+			bound_points.append(Vector2i(dx, structure.bounds.size.y - 1))
+		for dy in range(structure.bounds.size.y):
+			bound_points.append(Vector2i(0, dy))
+			bound_points.append(Vector2i(structure.bounds.size.x - 1, dy))
+		for point in bound_points:
+			structure_layer.set_cell(structure.bounds.position + point, 0, Vector2i(1, 9))
 
 	if chunk.unpainted_tiles.size() == 0:
 		for dx in range(Psyoko.CHUNK_SIZE):
