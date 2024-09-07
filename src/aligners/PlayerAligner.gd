@@ -41,8 +41,7 @@ func fast_forward_event(event : Event, time_seconds : float) -> void:
 
 
 func _do_spawn(event : PlayerSpawnEvent) -> void:
-	var player : Player = Router.game.make_player(event.player_id)
-	player.position = event.location
+	var player : Player = Router.game.make_player(event.player_id, event.location)
 	
 	player.death_timer.timeout.connect(_actually_do_death.bind(player))
 

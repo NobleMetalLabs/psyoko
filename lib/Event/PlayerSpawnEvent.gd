@@ -14,7 +14,10 @@ static func setup(peer_id : int, _location : Vector2i = Vector2i.ZERO) -> Player
 	event.time = Aligner.get_time()
 	if _location == Vector2i.ZERO:
 		seed(peer_id * event.time)
-		_location = Vector2i(randi_range(0, 10), randi_range(0, 10)) * Psyoko.TILE_SIZE
+	
+		var debug_range = Psyoko.CHUNK_SIZE * 2
+		_location = Vector2i(randi_range(-debug_range, debug_range), randi_range(-debug_range, debug_range)) * Psyoko.TILE_SIZE
 		_location += Vector2i.ONE * (Psyoko.TILE_SIZE / 2)
+	
 	event.location = _location 
 	return event

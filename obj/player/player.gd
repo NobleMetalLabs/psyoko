@@ -17,8 +17,10 @@ signal attacked(direction : Vector2i, long : bool)
 
 var accept_input : bool = false
 var attack_charge_value : float = 0
-
 var number_of_kills : int = 0
+
+var chunk_coord : Vector2i
+signal passed_chunk_border(coord : Vector2i)
 
 func _process(delta: float) -> void:
 	if not accept_input:
@@ -62,3 +64,9 @@ func _process(delta: float) -> void:
 		
 	else:
 		moved.emit(input_vector)
+	
+		var border_coord_check : Vector2i = WorldData.tile_to_chunk_coords(position / Psyoko.TILE_SIZE)
+		if chunk_coord == border_coord_check: return
+		
+		chunk_coord = border_coord_check
+		passed_chunk_border.emit(chunk_coord)

@@ -52,10 +52,15 @@ func _ready():
 var player_scene : PackedScene = load("res://obj/player/Player.tscn")
 
 @onready var world : Node2D = $"%WORLD"
-func make_player(peer_id : int) -> Player:
+func make_player(peer_id : int, location : Vector2i = Vector2i.ZERO) -> Player:
 	var player : Player = player_scene.instantiate()
 	world.add_child(player)
 	player.name = "P%s" % peer_id
+	
+	player.position = location
+	player.chunk_coord = WorldData.tile_to_chunk_coords(player.position / Psyoko.TILE_SIZE)
+	
+	world.enter_chunk_by_coord(player.chunk_coord)
 
 	if peer_id == MultiplayerManager.get_peer_id():
 		player.audio_listener.make_current()
@@ -68,6 +73,10 @@ func make_player(peer_id : int) -> Player:
 		player.attacked.connect(
 			func(direction : Vector2i, is_long : bool) -> void:
 			player_attacks(player, direction, is_long)
+		)
+		player.passed_chunk_border.connect(
+			func(coord : Vector2i) -> void:
+			world.enter_chunk_by_coord(coord)
 		)
 	return player
 
