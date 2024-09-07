@@ -53,9 +53,9 @@ func host_lobby(over_lan : bool = false) -> void:
 	print("Server started on port %s with clientid %s" % [PORT, get_peer_id()])
 	peer_ids.append(get_peer_id())
 	player_connected.emit(get_peer_id())
-	Aligner.submit_event(PlayerSpawnEvent.setup(1))
-	
+
 	Router.game.world.initialize_world()
+	Aligner.submit_event(PlayerSpawnEvent.setup(1))
 
 func join_lobby() -> void:
 	multiplayer_peer.create_client(ADDRESS, PORT)

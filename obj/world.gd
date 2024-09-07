@@ -9,10 +9,10 @@ func _ready() -> void:
 	)
 
 func initialize_world(world_seed : int = 0) -> void:
-	if world_seed == 0: WorldData.biome_zoner.biome_noise.seed = randi()
-	else: WorldData.biome_zoner.biome_noise.seed = world_seed
+	if world_seed == 0: WorldData.world_seed = randi()
+	else: WorldData.world_seed = world_seed
 	
-	seed(WorldData.biome_zoner.biome_noise.seed)
+	WorldData.biome_zoner.biome_noise.seed = WorldData.world_seed
 
 var rendered_chunks : Array[Chunk]
 func enter_chunk_by_coord(chunk_coord : Vector2i) -> void:

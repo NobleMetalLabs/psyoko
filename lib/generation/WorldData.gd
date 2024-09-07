@@ -1,6 +1,7 @@
 #class_name WorldData
 extends Node
 
+var world_seed : int = 0
 var chunks : Array[Chunk] = []
 var _chunk_coords_to_chunks : Dictionary = {} #[Vector2i, Chunk]
 

@@ -70,3 +70,4 @@ func _process(delta: float) -> void:
 		
 		chunk_coord = border_coord_check
 		passed_chunk_border.emit(chunk_coord)
+		print(chunk_coord)

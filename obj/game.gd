@@ -65,8 +65,6 @@ func make_player(peer_id : int, location : Vector2i = Vector2i.ZERO) -> Player:
 		player.audio_listener.make_current()
 		player.accept_input = true
 		world.enter_chunk_by_coord(player.chunk_coord)
-		
-		#print(player.chunk_coord)
 
 		player.moved.connect(
 			func(direction : Vector2i) -> void:
