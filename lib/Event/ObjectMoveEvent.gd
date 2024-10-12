@@ -1,7 +1,6 @@
 class_name ObjectMoveEvent
 extends Event
 
-var time : int
 var object_id : int
 var direction : Vector2i
 

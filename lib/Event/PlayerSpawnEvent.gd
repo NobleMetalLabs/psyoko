@@ -1,7 +1,6 @@
 class_name PlayerSpawnEvent
 extends Event
 
-var time : int
 var player_id : int
 var location : Vector2i
 

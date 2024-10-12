@@ -1,7 +1,6 @@
 class_name PlayerAttackEvent
 extends Event
 
-var time : int
 var player_id : int
 var direction : Vector2i
 var is_long : bool

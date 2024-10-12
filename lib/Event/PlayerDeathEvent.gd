@@ -1,7 +1,6 @@
 class_name PlayerDeathEvent
 extends Event
 
-var time : int
 var player_id : int
 var killer_id : int
 
