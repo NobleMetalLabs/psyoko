@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("pl_right"):
 		input_vector += Vector2.RIGHT
 
-	var alternate : bool = Input.is_action_pressed("pl_alternate")
+	var alternate : bool = Input.is_action_pressed("pl_attack")
 	if alternate:
 		attack_charge_value += delta
 		if attack_charge_value >= 1 and not played_charge_sound: 

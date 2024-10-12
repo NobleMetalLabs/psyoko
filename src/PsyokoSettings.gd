@@ -20,7 +20,26 @@ func _ready() -> void:
 	apply_settings_to_game()
 
 func get_setting(key : String) -> Variant:
+	if key not in settings:
+		var input_result : Key = scheme_keys.get(key)
+		if input_result == null:
+			push_error("Setting key <%s> not found in settings." % key)
+			return null
+		return input_result
 	return settings[key]
+
+var scheme_keys : Dictionary = { 
+		"input_0_pl_up_keycode" : KEY_W ,
+		"input_0_pl_down_keycode" : KEY_S,
+		"input_0_pl_left_keycode" : KEY_A,
+		"input_0_pl_right_keycode" : KEY_D,
+		"input_0_pl_attack_keycode" : KEY_SHIFT,
+		"input_1_pl_up_keycode" : KEY_UP,
+		"input_1_pl_down_keycode" : KEY_DOWN,
+		"input_1_pl_left_keycode" : KEY_LEFT,
+		"input_1_pl_right_keycode" : KEY_RIGHT,
+		"input_1_pl_attack_keycode" : KEY_SHIFT,
+	}
 
 func set_setting(key : String, value : Variant, apply_setting : bool = true) -> void:
 	settings_config.set_value(_setting_key_to_section[key], key, value)
@@ -51,11 +70,16 @@ func apply_settings_to_game(setting_keys = settings.keys()) -> void:
 				AudioServer.set_bus_volume_db(1, linear_to_db(settings["game"]))
 			"ambient":
 				AudioServer.set_bus_volume_db(2, linear_to_db(settings["ambient"]))
-			"scheme":
-				# set input scheme
-				pass
-			_:
-				push_warning("Unknown setting key <%s> with value <%s>" % [key, setting_value])
+
+	var input_actions : Array[StringName] = InputMap.get_actions()
+	var player_actions : Array[StringName] = input_actions.filter(func (action : StringName) -> bool: return action.begins_with("pl"))
+	var input_scheme = settings["scheme"]
+	for action : StringName in player_actions:
+		var action_keycode : Key = get_setting("input_%s_%s_keycode" % [input_scheme, action])
+		var new_event : InputEventKey = InputEventKey.new()
+		new_event.keycode = action_keycode
+		InputMap.action_erase_events(action)
+		InputMap.action_add_event(action, new_event)
 
 func save_settings_to_disk() -> void:
 	var err = settings_config.save("user://settings.cfg")

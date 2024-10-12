@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://41go08s773fn"]
+[gd_scene load_steps=18 format=3 uid="uid://41go08s773fn"]
 
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/UITheme.tres" id="1_7bnsp"]
 [ext_resource type="Script" path="res://src/ui/ThemeOverrideOptionButton.gd" id="2_abe18"]
@@ -59,6 +59,9 @@ content_margin_right = 10.0
 content_margin_bottom = 5.0
 bg_color = Color(1, 1, 1, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_lp4n5"]
+font_size = 19
+
 [node name="SETTINGS-MENU" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -95,9 +98,10 @@ theme_override_font_sizes/font_size = 48
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_yd5no")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_j31hm")
 tab_alignment = 2
-current_tab = 0
+current_tab = 2
 
 [node name="VIDEO" type="VBoxContainer" parent="__/BG/margins/SETTINGS-TABS"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -222,9 +226,8 @@ step = 0.001
 value = 0.5
 
 [node name="INPUT" type="VBoxContainer" parent="__/BG/margins/SETTINGS-TABS"]
-visible = false
 layout_mode = 2
-theme_override_constants/separation = 35
+theme_override_constants/separation = 15
 metadata/_tab_index = 2
 
 [node name="Scheme" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/INPUT"]
@@ -241,11 +244,96 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 selected = 0
-item_count = 2
+item_count = 3
 popup/item_0/text = "WASD"
 popup/item_1/text = "Arrow Keys"
 popup/item_1/id = 1
+popup/item_2/text = "Custom"
+popup/item_2/id = 2
 script = ExtResource("2_abe18")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="__/BG/margins/SETTINGS-TABS/INPUT"]
+layout_mode = 2
+ratio = 1.5
+
+[node name="CUSTOM-INPUT-FIELD-STACK" type="VBoxContainer" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="UP" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK/UP"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Move Up"
+label_settings = SubResource("LabelSettings_lp4n5")
+
+[node name="Button" type="Button" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK/UP"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "W"
+
+[node name="DOWN" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK/DOWN"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Move Down"
+label_settings = SubResource("LabelSettings_lp4n5")
+
+[node name="Button" type="Button" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK/DOWN"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "S"
+
+[node name="LEFT" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK/LEFT"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Move Left"
+label_settings = SubResource("LabelSettings_lp4n5")
+
+[node name="Button" type="Button" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK/LEFT"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "A"
+
+[node name="RIGHT" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK/RIGHT"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Move Right"
+label_settings = SubResource("LabelSettings_lp4n5")
+
+[node name="Button" type="Button" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK/RIGHT"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "D"
+
+[node name="ATTACK" type="HBoxContainer" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK/ATTACK"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Attack"
+label_settings = SubResource("LabelSettings_lp4n5")
+
+[node name="Button" type="Button" parent="__/BG/margins/SETTINGS-TABS/INPUT/AspectRatioContainer/CUSTOM-INPUT-FIELD-STACK/ATTACK"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Shift"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="__/BG/margins"]
 layout_mode = 2

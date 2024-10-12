@@ -8,7 +8,7 @@ func _process(delta: float) -> void:
 		Input.get_axis("pl_up", "pl_down"),
 	)
 
-	if Input.is_action_pressed("pl_alternate"):
+	if Input.is_action_pressed("pl_attack"):
 		input_vector *= 5
 
 	self.position += input_vector * 2 * Psyoko.TILE_SIZE * Psyoko.CHUNK_SIZE * delta

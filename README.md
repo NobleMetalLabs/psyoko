@@ -22,7 +22,7 @@ Primarily it is an applied experiment and learning effort for Rollback Netcoding
   - [ ] Menus
   - [ ] Palettes
   - [/] Sound
-  - [ ] Rebinds
+  - [x] Rebinds
 - [ ] Improvements
   - [ ] More resilient catchup on join
   - [ ] Threading of chunk generation
