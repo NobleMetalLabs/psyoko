@@ -15,8 +15,6 @@ Primarily it is an applied experiment and learning effort for Rollback Netcoding
   - [x] Pushable Boxes
   - [/] Scoreboard
 - [ ] World
-  - [ ] Tileset
-  - [ ] Tile Properties
   - [ ] WFC Structures
   - [ ] WFC Implementation
   - [/] Chunk loading
@@ -25,3 +23,6 @@ Primarily it is an applied experiment and learning effort for Rollback Netcoding
   - [ ] Palettes
   - [/] Sound
   - [ ] Rebinds
+- [ ] Improvements
+  - [ ] More resilient catchup on join
+  - [ ] Threading of chunk generation
