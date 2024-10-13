@@ -68,13 +68,29 @@ theme_override_font_sizes/font_size = 32
 text = "000.000.000.000"
 alignment = 2
 
-[node name="Control" type="Control" parent="__/BG/margins/__"]
+[node name="__" type="Control" parent="__/BG/margins/__"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="JoinButton" type="Button" parent="__/BG/margins/__"]
+[node name="HBoxContainer" type="HBoxContainer" parent="__/BG/margins/__"]
 layout_mode = 2
-size_flags_horizontal = 4
+
+[node name="HostButton" type="Button" parent="__/BG/margins/__/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/align_to_largest_stylebox = 1
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_7ac6e")
+text = "Host"
+
+[node name="__" type="Control" parent="__/BG/margins/__/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JoinButton" type="Button" parent="__/BG/margins/__/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/align_to_largest_stylebox = 1
 theme_override_font_sizes/font_size = 48

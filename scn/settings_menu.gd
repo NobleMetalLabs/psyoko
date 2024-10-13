@@ -3,11 +3,16 @@ extends Control
 
 @onready var save_button : Button = $"%SAVE-BUTTON"
 
+signal settings_saved()
 func _ready():
 	setup_custom_input_field_maps()
 	setup_setting_updates()
 	_load_settings_menu()
-	save_button.pressed.connect(Psyoko.settings.save_settings_to_disk)
+	save_button.pressed.connect(func save() -> void:
+		Psyoko.settings.save_settings_to_disk()
+		$"AudioDemo".fade_out()
+		settings_saved.emit()
+	)
 	
 	main_audio_slider.mouse_exited.connect(main_audio_slider.release_focus)
 	game_audio_slider.mouse_exited.connect(game_audio_slider.release_focus)

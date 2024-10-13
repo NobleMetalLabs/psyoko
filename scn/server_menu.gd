@@ -3,8 +3,10 @@ extends Control
 
 @onready var server_ip_line_edit : LineEdit = self.find_child("ServerIPLineEdit", true, false)
 @onready var join_button : Button = self.find_child("JoinButton", true, false)
+@onready var host_button : Button = self.find_child("HostButton", true, false)
 
 signal join_requested(ip : String)
+signal host_requested()
 
 func _ready() -> void:
 	server_ip_line_edit.text = MultiplayerManager.ADDRESS
@@ -15,6 +17,8 @@ func _ready() -> void:
 			begin_animating(ip)
 			join_requested.emit(ip)
 	)
+
+	host_button.pressed.connect(host_requested.emit)
 
 var animate : bool = false
 var saved_ip : String 

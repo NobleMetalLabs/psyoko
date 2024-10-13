@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxxsongvd8cor"]
+[gd_scene load_steps=7 format=3 uid="uid://bxxsongvd8cor"]
 
 [ext_resource type="Script" path="res://obj/game.gd" id="1_pfeos"]
 [ext_resource type="Script" path="res://obj/player/PlayerCamera.gd" id="2_32he5"]
 [ext_resource type="PackedScene" uid="uid://gopi1vs5xgml" path="res://obj/WORLD.tscn" id="3_c7xa5"]
 [ext_resource type="PackedScene" uid="uid://dl3op31q4jvbo" path="res://scn/play_menu.tscn" id="4_2atq3"]
 [ext_resource type="PackedScene" uid="uid://bqqu43wbn2ks" path="res://scn/server_menu.tscn" id="5_74gvi"]
+[ext_resource type="PackedScene" uid="uid://41go08s773fn" path="res://scn/settings_menu.tscn" id="6_s5om3"]
 
 [node name="GAME" type="Node"]
 script = ExtResource("1_pfeos")
@@ -19,8 +20,11 @@ unique_name_in_owner = true
 
 [node name="PLAY-MENU" parent="CanvasLayer" instance=ExtResource("4_2atq3")]
 unique_name_in_owner = true
-visible = false
 
 [node name="SERVER_MENU" parent="CanvasLayer" instance=ExtResource("5_74gvi")]
+unique_name_in_owner = true
+visible = false
+
+[node name="SETTINGS-MENU" parent="CanvasLayer" instance=ExtResource("6_s5om3")]
 unique_name_in_owner = true
 visible = false

@@ -3,6 +3,7 @@ extends Node
 
 @onready var play_menu : PlayMenu = $"%PLAY-MENU"
 @onready var server_menu : ServerMenu = $"%SERVER_MENU"
+@onready var settings_menu : SettingsMenu = $"%SETTINGS-MENU"
 
 func _ready():
 	var args := Array(OS.get_cmdline_args())
@@ -14,14 +15,16 @@ func _ready():
 		if ip_arg_idx != -1:
 			server_ip = args[ip_arg_idx + 1]
 		server_menu.join_requested.emit(server_ip)
-		play_menu.play_requested.emit("", true, server_ip)
 	
 	if args.has("-client"):
 		for bus_idx : int in range(0, AudioServer.bus_count):
 			AudioServer.set_bus_mute(bus_idx, true)
 
-	if not MultiplayerManager.is_in_server():
-		server_menu.show()
+	server_menu.host_requested.connect(
+		func() -> void:
+			MultiplayerManager.host_lobby()
+			#server_menu.hide()
+	)
 
 	server_menu.join_requested.connect(
 		func(server_ip : String) -> void:
@@ -30,13 +33,17 @@ func _ready():
 			MultiplayerManager.join_lobby()
 	)
 
+	var cleanup_server_menu : Callable = func() -> void:
+		server_menu.stop_animating()
+		server_menu.hide()
+		play_menu.show_menu()
+
 	MultiplayerManager.received_network_message.connect(
 		func handle_network_message(_sender_id : int, message : String, _args : Array) -> void:
-		if message == "game/state_init":
-			server_menu.stop_animating()
-			server_menu.hide()
-			play_menu.show()
+			if message != "game/state_init": return
+			cleanup_server_menu.call()
 	)
+	MultiplayerManager.hosted_lobby.connect(cleanup_server_menu)
 	
 	play_menu.play_requested.connect(
 		func(player_name : String, player_color : Color) -> void:
@@ -45,6 +52,21 @@ func _ready():
 			Aligner.submit_event(PlayerSpawnEvent.setup(MultiplayerManager.get_peer_id()))
 			Aligner.submit_event(ObjectSetColorEvent.setup(MultiplayerManager.get_peer_id(), player_color))
 			play_menu.hide()
+	)
+	play_menu.settings_requested.connect(
+		func() -> void:
+			play_menu.hide()
+			settings_menu.show()
+	)
+	play_menu.change_server_requested.connect(
+		func() -> void:
+			play_menu.hide()
+			server_menu.show()
+	)
+	settings_menu.settings_saved.connect(
+		func() -> void:
+			settings_menu.hide()
+			play_menu.show()
 	)
 
 	# for box : Pushable in world.get_node("boxes").get_children():

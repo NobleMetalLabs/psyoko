@@ -58,43 +58,75 @@ text = "PSYOKO"
 label_settings = SubResource("LabelSettings_hgstc")
 horizontal_alignment = 1
 
-[node name="NameStack" type="HBoxContainer" parent="__/BG/margins/__"]
+[node name="__" type="VBoxContainer" parent="__/BG/margins/__"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="NameStack" type="HBoxContainer" parent="__/BG/margins/__/__"]
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="__/BG/margins/__/NameStack"]
+[node name="NameLabel" type="Label" parent="__/BG/margins/__/__/NameStack"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Name: "
 label_settings = SubResource("LabelSettings_3pu2x")
 
-[node name="NameLineEdit" type="LineEdit" parent="__/BG/margins/__/NameStack"]
+[node name="NameLineEdit" type="LineEdit" parent="__/BG/margins/__/__/NameStack"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 32
 alignment = 2
 max_length = 21
 
-[node name="ColorStack" type="HBoxContainer" parent="__/BG/margins/__"]
+[node name="ColorStack" type="HBoxContainer" parent="__/BG/margins/__/__"]
 layout_mode = 2
 
-[node name="ColorLabel" type="Label" parent="__/BG/margins/__/ColorStack"]
+[node name="ColorLabel" type="Label" parent="__/BG/margins/__/__/ColorStack"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Color:"
 label_settings = SubResource("LabelSettings_3pu2x")
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="__/BG/margins/__/ColorStack"]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="__/BG/margins/__/__/ColorStack"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_dplr7")
 color = Color(1, 1, 1, 1)
 
-[node name="PlayButton" type="Button" parent="__/BG/margins/__"]
+[node name="HBoxContainer" type="HBoxContainer" parent="__/BG/margins/__"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="SettingsButton" type="Button" parent="__/BG/margins/__/HBoxContainer"]
+self_modulate = Color(0.98, 0.98, 0.98, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/align_to_largest_stylebox = 1
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_7ac6e")
+text = "Settings"
+
+[node name="PlayButton" type="Button" parent="__/BG/margins/__/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/align_to_largest_stylebox = 1
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_7ac6e")
 text = " Play "
+
+[node name="ChangeServerButton" type="Button" parent="__/BG/margins/__/HBoxContainer"]
+self_modulate = Color(0.98, 0.98, 0.98, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/align_to_largest_stylebox = 1
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_7ac6e")
+text = "Change Server"

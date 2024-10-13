@@ -37,6 +37,7 @@ func _notification(what: int) -> void:
 		if upnp.get_device_count() > 0:
 			upnp.delete_port_mapping(PORT, "UDP")
 
+signal hosted_lobby()
 func host_lobby(over_lan : bool = false) -> void:
 	if not over_lan:
 		var discover_result := upnp.discover() as UPNP.UPNPResult
@@ -55,8 +56,9 @@ func host_lobby(over_lan : bool = false) -> void:
 	player_connected.emit(get_peer_id())
 
 	Router.game.world.initialize_world()
-	Aligner.submit_event(PlayerSpawnEvent.setup(1))
+	hosted_lobby.emit()
 
+signal joined_lobby()
 func join_lobby() -> void:
 	multiplayer_peer.create_client(ADDRESS, PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
@@ -64,6 +66,7 @@ func join_lobby() -> void:
 	print("Joined server with clientid %s" % [get_peer_id()])
 	peer_ids.append(get_peer_id())
 	player_connected.emit(get_peer_id())
+	joined_lobby.emit()
 
 func exit_lobby() -> void:
 	multiplayer_peer = ENetMultiplayerPeer.new()
