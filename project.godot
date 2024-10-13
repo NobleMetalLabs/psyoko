@@ -35,10 +35,6 @@ window/size/viewport_width=960
 window/size/viewport_height=540
 window/stretch/mode="viewport"
 
-[editor]
-
-run/main_run_args="-server"
-
 [input]
 
 pl_up={

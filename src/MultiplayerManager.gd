@@ -40,14 +40,11 @@ func _notification(what: int) -> void:
 signal hosted_lobby()
 func host_lobby(over_lan : bool = false) -> void:
 	if not over_lan:
-		var discover_result := upnp.discover() as UPNP.UPNPResult
-		if discover_result == UPNP.UPNP_RESULT_SUCCESS:
-			if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
-				var result_udp := upnp.add_port_mapping(PORT, PORT, "Psyoko Multiplayer", "UDP")
-				if not result_udp == UPNP.UPNP_RESULT_SUCCESS:
-					upnp.add_port_mapping(PORT, PORT, "", "UDP")
-			ADDRESS = upnp.query_external_address()
+		upnp_discovery_thread.start(conduct_upnp_discovery)
+	else:
+		_create_server()
 
+func _create_server() -> void:
 	multiplayer_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 	connected = true
@@ -57,6 +54,25 @@ func host_lobby(over_lan : bool = false) -> void:
 
 	Router.game.world.initialize_world()
 	hosted_lobby.emit()
+
+func _process(_delta : float) -> void:
+	upnp_discovery_thread_checkup()
+
+var upnp_discovery_thread : Thread = Thread.new() 
+func conduct_upnp_discovery() -> void:
+	var discover_result := upnp.discover() as UPNP.UPNPResult
+	if discover_result == UPNP.UPNP_RESULT_SUCCESS:
+		if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
+			var result_udp := upnp.add_port_mapping(PORT, PORT, "Psyoko Multiplayer", "UDP")
+			if not result_udp == UPNP.UPNP_RESULT_SUCCESS:
+				upnp.add_port_mapping(PORT, PORT, "", "UDP")
+		ADDRESS = upnp.query_external_address()
+
+func upnp_discovery_thread_checkup() -> void:
+	if not upnp_discovery_thread.is_started(): return
+	if upnp_discovery_thread.is_alive(): return
+	upnp_discovery_thread.wait_to_finish()
+	_create_server()
 
 signal joined_lobby()
 func join_lobby() -> void:

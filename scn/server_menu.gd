@@ -18,7 +18,11 @@ func _ready() -> void:
 			join_requested.emit(ip)
 	)
 
-	host_button.pressed.connect(host_requested.emit)
+	host_button.pressed.connect(
+		func host_game() -> void:
+			begin_animating("Opening Port...")
+			host_requested.emit()
+	)
 
 var animate : bool = false
 var saved_ip : String 
