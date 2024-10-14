@@ -27,7 +27,6 @@ func receive_network_message(bytes : PackedByteArray) -> void:
 
 var multiplayer_peer := ENetMultiplayerPeer.new()
 var peer_ids : Array[int] = []
-var player_name : String = "P%s" % OS.get_process_id()
 
 var connected : bool = false
 
@@ -118,14 +117,8 @@ func on_player_connected(peer_id : int) -> void:
 	player_connected.emit(peer_id)
 	
 	if is_instance_server():
-		var player_id_to_position : Dictionary = {}
-		for player_id in peer_ids:
-			if not UIDDB.has_uid(player_id): continue
-			var player = UIDDB.object(player_id)
-			player_id_to_position[player_id] = player.position
-		
-		send_network_message("game/state_init", [Aligner.get_time(), player_id_to_position, WorldData.biome_zoner.biome_noise.seed], peer_id, true)
-		
+		send_network_message("game/state_init", [Aligner.get_time(), WorldData.biome_zoner.biome_noise.seed], peer_id, true)
+	
 signal player_connected(peer_id : int)
 
 func on_player_disconnected(peer_id : int) -> void:

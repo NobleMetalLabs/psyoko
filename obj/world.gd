@@ -5,7 +5,7 @@ func _ready() -> void:
 	MultiplayerManager.received_network_message.connect(
 		func handle_network_message(_sender_id : int, message : String, args : Array) -> void:
 		if message == "game/state_init":
-			initialize_world(args[2])
+			initialize_world(args[1])
 	)
 
 func initialize_world(world_seed : int = 0) -> void:

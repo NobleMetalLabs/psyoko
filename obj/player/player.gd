@@ -1,6 +1,7 @@
 class_name Player
 extends Pushable
 
+var username : String
 @onready var attack_sprite : PlayerAttackSprite = $AttackSprite
 @onready var audio_listener : AudioListener2D = $AudioListener2D
 @onready var death_timer : Timer = $DeathTimer

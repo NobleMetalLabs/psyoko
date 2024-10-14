@@ -48,9 +48,7 @@ func _ready():
 	
 	play_menu.play_requested.connect(
 		func(player_name : String, player_color : Color) -> void:
-			if not player_name.is_empty():
-				MultiplayerManager.player_name = player_name
-			Aligner.submit_event(PlayerSpawnEvent.setup(MultiplayerManager.get_peer_id()))
+			Aligner.submit_event(PlayerSpawnEvent.setup(MultiplayerManager.get_peer_id(), player_name))
 			Aligner.submit_event(ObjectSetColorEvent.setup(MultiplayerManager.get_peer_id(), player_color))
 			play_menu.hide()
 			leaderboard.show()

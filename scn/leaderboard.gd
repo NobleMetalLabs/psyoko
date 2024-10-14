@@ -37,7 +37,7 @@ func update() -> void:
 		flex_label.text = generate_entry(local_player, local_player_rank + 1)
 
 func generate_entry(player : Player, rank : int) -> String:
-	var truncated_name : String = player.name.c_escape()
+	var truncated_name : String = player.username.c_escape()
 	if truncated_name.length() > 14: truncated_name = truncated_name.left(11) + "..."
 	
 	return "#%-2d %-14s %3d" % [rank, truncated_name, player.number_of_kills]

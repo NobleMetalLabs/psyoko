@@ -5,7 +5,6 @@ var object_id : int
 var color : Color
 var previous_color : Color
 
-# TODO: Event gets eaten when players join the server
 func _to_string() -> String:
 	return "ObjectSetColorEvent(%s, %s, %s, %s)" % [time, object_id]
 

@@ -7,16 +7,7 @@ func _ready():
 	Aligner.do_event.connect(do_event)
 	Aligner.undo_event.connect(undo_event)
 	Aligner.fast_forward_event.connect(fast_forward_event)
-	
-	MultiplayerManager.received_network_message.connect(
-		func handle_network_message(_sender_id : int, message : String, args : Array) -> void:
-		if message == "game/state_init":
-			init_players(args[1])
-	)
 
-func init_players(pi2p : Dictionary):
-	for player_id in pi2p:
-		_do_spawn(PlayerSpawnEvent.setup(player_id, pi2p[player_id]))
 
 func do_event(event : Event) -> void:
 	if event is PlayerSpawnEvent:
@@ -44,13 +35,14 @@ func _do_spawn(event : PlayerSpawnEvent) -> void:
 	var player : Player = Router.game.make_player(event.player_id, event.location)
 	
 	player.death_timer.timeout.connect(_actually_do_death.bind(player))
+	player.username = event.username
 
 	UIDDB.register_object(player, event.player_id)
 	Router.game.leaderboard.update()
 
 func _undo_spawn(event : PlayerSpawnEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
-		
+	
 	player.death_timer.timeout.disconnect(_actually_do_death.bind(player))
 	
 	UIDDB.unregister_object(player)
@@ -111,6 +103,7 @@ func _do_death(event : PlayerDeathEvent) -> void:
 func _actually_do_death(player : Player) -> void:
 	if player == MultiplayerManager.get_local_player():
 		Router.game.you_died()
+		Aligner.clear_current_events()
 
 	UIDDB.unregister_object(player)
 	player.queue_free()

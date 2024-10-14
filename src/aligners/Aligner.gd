@@ -22,11 +22,22 @@ func _ready():
 		func handle_network_message(_sender_id : int, message : String, args : Array) -> void:
 		if message == "event":
 			_handle_event(args[0])
-		if message == "game/state_init":
+		elif message == "game/state_init":
 			set_start_time(args[0])
+			MultiplayerManager.send_network_message("game/event_catchup_request", [], -1, true)
+		elif message == "game/event_catchup_request":
+			MultiplayerManager.send_network_message("game/event_catchup_response", [current_events], _sender_id, true)
+		elif message == "game/event_catchup_response":
+			for event : Event in args[0]:
+				_handle_event(event)
 	)
 
+var current_events : Array[Event]
+func clear_current_events() -> void:
+	current_events.clear()
+
 func submit_event(new_event : Event) -> void:
+	current_events.append(new_event)
 	MultiplayerManager.send_network_message("event", [new_event])
 
 signal do_event(event : Event)
