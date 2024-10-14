@@ -18,6 +18,7 @@ signal attacked(direction : Vector2i, long : bool)
 var accept_input : bool = false
 var attack_charge_value : float = 0
 var number_of_kills : int = 0
+var is_alive : bool = true
 
 var chunk_coord : Vector2i
 signal passed_chunk_border(coord : Vector2i)

@@ -98,6 +98,7 @@ func _do_death(event : PlayerDeathEvent) -> void:
 	
 	player.hide()
 	player.accept_input = false
+	player.is_alive = false
 	player.collision_shape.set_deferred("disabled", true)
 	
 	player.death_timer.start(2)
@@ -120,6 +121,7 @@ func _undo_death(event : PlayerDeathEvent) -> void:
 	
 	player.show()
 	player.accept_input = true
+	player.is_alive = true
 	player.collision_shape.set_deferred("disabled", false)
 	
 	player.death_timer.stop()

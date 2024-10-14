@@ -11,7 +11,7 @@ func update() -> void:
 		var player : Player = UIDDB.object(player_id)
 		
 		#print("%s Kills: %d" % [player.name, player.number_of_kills])
-		if player.accept_input: sorted_players.push_back(player)
+		if player.is_alive: sorted_players.push_back(player)
 	
 	sorted_players.sort_custom(func(a: Player, b: Player): return a.number_of_kills > b.number_of_kills)
 	

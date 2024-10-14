@@ -6,21 +6,23 @@ Primarily it is an applied experiment and learning effort for Rollback Netcoding
 
 ## Roadmap
 
-- [ ] Gameplay
+- [x] Gameplay
   - [x] Rollback
   - [x] Player spawn
   - [x] Movement
   - [x] Attacking
   - [x] Death
   - [x] Pushable Boxes
-  - [/] Scoreboard
+  - [x] Scoreboard
 - [ ] World
   - [ ] WFC Structures
   - [ ] WFC Implementation
   - [/] Chunk loading
+  - [ ] Boxes in world
+  - [ ] Tilesets
 - [ ] Polish
-  - [ ] Menus
-  - [ ] Palettes
+  - [x] Menus
+  - [x] Player Color
   - [/] Sound
   - [x] Rebinds
 - [ ] Improvements
