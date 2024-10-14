@@ -4,6 +4,7 @@ extends Node
 @onready var play_menu : PlayMenu = $"%PLAY-MENU"
 @onready var server_menu : ServerMenu = $"%SERVER_MENU"
 @onready var settings_menu : SettingsMenu = $"%SETTINGS-MENU"
+@onready var leaderboard : Leaderboard = $"%LEADERBOARD"
 
 func _ready():
 	var args := Array(OS.get_cmdline_args())
@@ -52,6 +53,8 @@ func _ready():
 			Aligner.submit_event(PlayerSpawnEvent.setup(MultiplayerManager.get_peer_id()))
 			Aligner.submit_event(ObjectSetColorEvent.setup(MultiplayerManager.get_peer_id(), player_color))
 			play_menu.hide()
+			leaderboard.show()
+			leaderboard.update()
 	)
 	play_menu.settings_requested.connect(
 		func() -> void:
@@ -68,6 +71,8 @@ func _ready():
 			settings_menu.hide()
 			play_menu.show()
 	)
+	
+	play_menu.show_menu()
 
 	# for box : Pushable in world.get_node("boxes").get_children():
 	# 	UIDDB.register_object(box, hash(box.position))
@@ -125,10 +130,5 @@ func _process(_delta: float) -> void:
 		Aligner.submit_event(event)
 
 func you_died() -> void:
-	play_menu.show()
-
-func update_leaderboard() -> void:
-	for player_id : int in MultiplayerManager.peer_ids:
-		if not UIDDB.has_uid(player_id): continue
-		var player : Player = UIDDB.object(player_id)
-		#print("%s Kills: %d" % [player.name, player.number_of_kills])
+	play_menu.show_menu()
+	leaderboard.hide()

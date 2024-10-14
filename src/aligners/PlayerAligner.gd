@@ -46,7 +46,7 @@ func _do_spawn(event : PlayerSpawnEvent) -> void:
 	player.death_timer.timeout.connect(_actually_do_death.bind(player))
 
 	UIDDB.register_object(player, event.player_id)
-	
+	Router.game.leaderboard.update()
 
 func _undo_spawn(event : PlayerSpawnEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
@@ -56,6 +56,7 @@ func _undo_spawn(event : PlayerSpawnEvent) -> void:
 	UIDDB.unregister_object(player)
 	if player != null:
 		player.queue_free()
+	Router.game.leaderboard.update()
 
 func _do_attack(event : PlayerAttackEvent) -> void:
 	var player : Player = UIDDB.object(event.player_id)
@@ -104,7 +105,7 @@ func _do_death(event : PlayerDeathEvent) -> void:
 	var killer : Player = UIDDB.object(event.killer_id)
 	killer.number_of_kills += 1
 	
-	Router.game.update_leaderboard()
+	Router.game.leaderboard.update()
 
 func _actually_do_death(player : Player) -> void:
 	if player == MultiplayerManager.get_local_player():
@@ -125,6 +126,8 @@ func _undo_death(event : PlayerDeathEvent) -> void:
 	
 	var killer : Player = UIDDB.object(event.killer_id)
 	killer.number_of_kills -= 1
+	
+	Router.game.leaderboard.update()
 
 func _fast_forward_death(event : PlayerDeathEvent, time_seconds : float) -> void:
 	var player : Player = UIDDB.object(event.player_id)

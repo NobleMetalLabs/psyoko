@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8lh3b4umwhno"]
+
+[ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/UITheme.tres" id="1_ycqay"]
+[ext_resource type="Script" path="res://scn/leaderboard.gd" id="2_njn0o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5dwpi"]
+font_size = 18
+
+[sub_resource type="LabelSettings" id="LabelSettings_eqjva"]
+font_size = 12
+
+[node name="LEADERBOARD" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_ycqay")
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+script = ExtResource("2_njn0o")
+
+[node name="_" type="Control" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="_" type="PanelContainer" parent="_"]
+custom_minimum_size = Vector2(142, 224)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.0
+offset_bottom = 224.0
+grow_horizontal = 0
+
+[node name="LABEL_CONTAINER" type="VBoxContainer" parent="_/_"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="-" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "Leaderboard"
+label_settings = SubResource("LabelSettings_5dwpi")
+horizontal_alignment = 1
+
+[node name="--" type="HSeparator" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+
+[node name="PlacementLabel1" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
+
+[node name="PlacementLabel2" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
+
+[node name="PlacementLabel3" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
+
+[node name="PlacementLabel4" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
+
+[node name="PlacementLabel5" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
+
+[node name="PlacementLabel6" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
+
+[node name="PlacementLabel7" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
+
+[node name="PlacementLabel8" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
+
+[node name="PlacementLabel9" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
+
+[node name="PlacementLabel10" type="Label" parent="_/_/LABEL_CONTAINER"]
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
+
+[node name="FlexLabel" type="Label" parent="_/_/LABEL_CONTAINER"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+text = "#10 Goog---------- 000"
+label_settings = SubResource("LabelSettings_eqjva")
+horizontal_alignment = 2
