@@ -11,6 +11,7 @@ func _ready():
 	save_button.pressed.connect(func save() -> void:
 		Psyoko.settings.save_settings_to_disk()
 		$"AudioDemo".fade_out()
+		$"%SETTINGS-TABS".current_tab = 0
 		settings_saved.emit()
 	)
 	
