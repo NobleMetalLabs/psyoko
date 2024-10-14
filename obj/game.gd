@@ -115,17 +115,9 @@ func move_player(player : Player, direction : Vector2) -> void:
 	Aligner.submit_event(ObjectMoveEvent.setup(player, flipped))
 	for pushed_object in pushed_objects:
 		Aligner.submit_event(ObjectMoveEvent.setup(pushed_object, flipped))
-	
-	
 
 func player_attacks(player : Player, direction : Vector2, is_long : bool) -> void:
 	Aligner.submit_event(PlayerAttackEvent.setup(player, direction, is_long))
-
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("debug"):
-		var event : Event = ObjectMoveEvent.setup(MultiplayerManager.get_local_player(), Vector2i.RIGHT)
-		event.time = 0
-		Aligner.submit_event(event)
 
 func you_died() -> void:
 	play_menu.show_menu()

@@ -26,5 +26,5 @@ Primarily it is an applied experiment and learning effort for Rollback Netcoding
   - [/] Sound
   - [x] Rebinds
 - [ ] Improvements
-  - [ ] More resilient catchup on join
+  - [x] More resilient catchup on join
   - [ ] Threading of chunk generation
