@@ -62,7 +62,7 @@ func _ready():
 	play_menu.change_server_requested.connect(
 		func() -> void:
 			play_menu.hide()
-			server_menu.show()
+			server_menu.show_menu()
 	)
 	settings_menu.settings_saved.connect(
 		func() -> void:

@@ -36,6 +36,13 @@ func _notification(what: int) -> void:
 		if upnp.get_device_count() > 0:
 			upnp.delete_port_mapping(PORT, "UDP")
 
+func leave_lobby() -> void:
+	if not connected: return
+	if is_instance_server():
+		#send message to all clients to leave
+		pass
+	multiplayer_peer.close()
+
 signal hosted_lobby()
 func host_lobby(over_lan : bool = false) -> void:
 	if not over_lan:

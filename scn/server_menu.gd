@@ -8,6 +8,10 @@ extends Control
 signal join_requested(ip : String)
 signal host_requested()
 
+func show_menu() -> void:
+	MultiplayerManager.leave_lobby()
+	show()
+
 func _ready() -> void:
 	server_ip_line_edit.text = MultiplayerManager.ADDRESS
 
