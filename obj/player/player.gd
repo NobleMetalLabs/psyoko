@@ -34,6 +34,17 @@ func _process(delta: float) -> void:
 	if attacking:
 		return
 
+	var top_arrow : Line2D = $TopArrow
+	var arrow_target : Player = Router.game.leaderboard.top_player
+	if arrow_target == self:
+		arrow_target = Router.game.leaderboard.second_player
+	if arrow_target != null:
+		top_arrow.visible = true
+		top_arrow.points[0] = self.position.direction_to(arrow_target.position) * 14
+		top_arrow.points[1] = self.position.direction_to(arrow_target.position) * 18
+	else:
+		top_arrow.visible = false
+
 	var input_vector : Vector2 = Vector2.ZERO
 	if Input.is_action_just_pressed("pl_up"):
 		input_vector -= Vector2.UP

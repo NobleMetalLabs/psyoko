@@ -4,6 +4,9 @@ extends Control
 @onready var label_container : VBoxContainer = $"%LABEL_CONTAINER"
 @onready var flex_label : Label = $"%FlexLabel"
 
+var top_player : Player = null
+var second_player : Player = null
+
 func update() -> void:
 	var sorted_players : Array[Player]
 	for player_id : int in MultiplayerManager.peer_ids:
@@ -16,7 +19,10 @@ func update() -> void:
 	sorted_players.sort_custom(func(a: Player, b: Player): return a.number_of_kills > b.number_of_kills)
 	
 	var local_player : Player = MultiplayerManager.get_local_player()
-	
+	var players_dupe : Array[Player] = sorted_players.duplicate()
+	top_player = players_dupe.pop_front()
+	second_player = players_dupe.front()
+
 	for leaderboard_index : int in range(10):
 		var leaderboard_label : Label = label_container.get_child(leaderboard_index + 2)
 		if leaderboard_index >= sorted_players.size():

@@ -137,3 +137,8 @@ theme = ExtResource("9_b5ohv")
 text = "Name"
 label_settings = SubResource("LabelSettings_o4w3r")
 horizontal_alignment = 1
+
+[node name="TopArrow" type="Line2D" parent="."]
+visible = false
+points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
