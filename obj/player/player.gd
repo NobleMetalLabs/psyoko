@@ -9,6 +9,7 @@ var username : String :
 @onready var attack_sprite : PlayerAttackSprite = $AttackSprite
 @onready var audio_listener : AudioListener2D = $AudioListener2D
 @onready var death_timer : Timer = $DeathTimer
+@onready var suicide_timer : Timer = $SuicideTimer
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
 
 var attacking : bool = false
@@ -28,11 +29,22 @@ var is_alive : bool = true
 var chunk_coord : Vector2i
 signal passed_chunk_border(coord : Vector2i)
 
+func _ready():
+	suicide_timer.timeout.connect(
+		func () -> void: Aligner.submit_event(PlayerDeathEvent.setup(self, self))
+	)
+
 func _process(delta: float) -> void:
 	if not accept_input:
 		return
 	if attacking:
 		return
+
+	if Input.is_action_pressed("pl_quit"):
+		if suicide_timer.is_stopped():
+			suicide_timer.start()
+	else:
+		suicide_timer.stop()
 
 	var top_arrow : Line2D = $TopArrow
 	var arrow_target : Player = Router.game.leaderboard.top_player

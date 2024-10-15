@@ -123,6 +123,10 @@ metadata/_edit_lock_ = true
 wait_time = 2.0
 one_shot = true
 
+[node name="SuicideTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [node name="ChargedAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_0i8ff")
 pitch_scale = 2.0

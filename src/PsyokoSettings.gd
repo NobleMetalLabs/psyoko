@@ -75,6 +75,7 @@ func apply_settings_to_game(setting_keys = settings.keys()) -> void:
 	var player_actions : Array[StringName] = input_actions.filter(func (action : StringName) -> bool: return action.begins_with("pl"))
 	var input_scheme = settings["scheme"]
 	for action : StringName in player_actions:
+		if action == "pl_quit": continue
 		var action_keycode : Key = get_setting("input_%s_%s_keycode" % [input_scheme, action])
 		var new_event : InputEventKey = InputEventKey.new()
 		new_event.keycode = action_keycode
